@@ -1,0 +1,2202 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%                impression de hieroglyphes en LaTeX
+%%                Hieroglyphs Writing in LaTeX  
+%%                Preliminary version for simple uses, with TeTex and
+%%                TTF fonts
+%% 
+%% S. Rosmorduc 1992-2019
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+
+\ProvidesPackage{hiero2}[2019/09/01 hieroglyphic package for Latex V2.8]
+\RequirePackage{ifthen}
+\RequirePackage{graphicx}
+\RequirePackage{fontspec}
+\RequirePackage{tikz}
+
+\usetikzlibrary{svg.path}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Fonts and Manuel de codage related stuff.
+
+\newfontfamily{\hieroFont}{JSesh font}
+
+\newcommand{\defhieroglyph}[2]{%
+\expandafter\def\csname hieroglyph #1\endcsname{#2}
+}
+
+\newcommand{\hieroglyph}[1]{\bgroup\hieroFont\csname hieroglyph #1\endcsname\egroup}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Character codes
+
+\defhieroglyph{A1}{𓀀}
+\defhieroglyph{A2}{𓀁}
+\defhieroglyph{A3}{𓀂}
+\defhieroglyph{A4}{𓀃}
+\defhieroglyph{A5}{𓀄}
+\defhieroglyph{A5A}{𓀅}
+\defhieroglyph{A6}{𓀆}
+\defhieroglyph{A133}{𓀇}
+\defhieroglyph{US1A6BEXTU}{𓀈}
+\defhieroglyph{A7}{𓀉}
+\defhieroglyph{A8}{𓀊}
+\defhieroglyph{A9}{𓀋}
+\defhieroglyph{A10}{𓀌}
+\defhieroglyph{A11}{𓀍}
+\defhieroglyph{A12}{𓀎}
+\defhieroglyph{A13}{𓀏}
+\defhieroglyph{A14}{𓀐}
+\defhieroglyph{A14A}{𓀑}
+\defhieroglyph{A15}{𓀒}
+\defhieroglyph{A16}{𓀓}
+\defhieroglyph{A17}{𓀔}
+\defhieroglyph{A17A}{𓀕}
+\defhieroglyph{A18}{𓀖}
+\defhieroglyph{A19}{𓀗}
+\defhieroglyph{A20}{𓀘}
+\defhieroglyph{A21}{𓀙}
+\defhieroglyph{A22}{𓀚}
+\defhieroglyph{A23}{𓀛}
+\defhieroglyph{A24}{𓀜}
+\defhieroglyph{A25}{𓀝}
+\defhieroglyph{A26}{𓀞}
+\defhieroglyph{A27}{𓀟}
+\defhieroglyph{A28}{𓀠}
+\defhieroglyph{A29}{𓀡}
+\defhieroglyph{A30}{𓀢}
+\defhieroglyph{A31}{𓀣}
+\defhieroglyph{A32}{𓀤}
+\defhieroglyph{A32F}{𓀥}
+\defhieroglyph{A33}{𓀦}
+\defhieroglyph{A34}{𓀧}
+\defhieroglyph{A35}{𓀨}
+\defhieroglyph{A36}{𓀩}
+\defhieroglyph{A37}{𓀪}
+\defhieroglyph{A38}{𓀫}
+\defhieroglyph{A39}{𓀬}
+\defhieroglyph{A40}{𓀭}
+\defhieroglyph{A40A}{𓀮}
+\defhieroglyph{A41}{𓀯}
+\defhieroglyph{A42}{𓀰}
+\defhieroglyph{A42A}{𓀱}
+\defhieroglyph{A43}{𓀲}
+\defhieroglyph{A43D}{𓀳}
+\defhieroglyph{A44}{𓀴}
+\defhieroglyph{A45}{𓀵}
+\defhieroglyph{A45B}{𓀶}
+\defhieroglyph{A46}{𓀷}
+\defhieroglyph{A47}{𓀸}
+\defhieroglyph{A48}{𓀹}
+\defhieroglyph{A49}{𓀺}
+\defhieroglyph{A50}{𓀻}
+\defhieroglyph{A51}{𓀼}
+\defhieroglyph{A52}{𓀽}
+\defhieroglyph{A53}{𓀾}
+\defhieroglyph{A54}{𓀿}
+\defhieroglyph{A55}{𓁀}
+\defhieroglyph{A56}{𓁁}
+\defhieroglyph{A57}{𓁂}
+\defhieroglyph{A58B}{𓁃}
+\defhieroglyph{A59}{𓁄}
+\defhieroglyph{A60}{𓁅}
+\defhieroglyph{A61}{𓁆}
+\defhieroglyph{A62}{𓁇}
+\defhieroglyph{A63}{𓁈}
+\defhieroglyph{A116}{𓁉}
+\defhieroglyph{A469}{𓁊}
+\defhieroglyph{A239}{𓁋}
+\defhieroglyph{A282}{𓁌}
+\defhieroglyph{A199A}{𓁍}
+\defhieroglyph{A69}{𓁎}
+\defhieroglyph{A73}{𓁏}
+\defhieroglyph{B1}{𓁐}
+\defhieroglyph{B2}{𓁑}
+\defhieroglyph{B3}{𓁒}
+\defhieroglyph{B4}{𓁓}
+\defhieroglyph{B5}{𓁔}
+\defhieroglyph{B104}{𓁕}
+\defhieroglyph{B6}{𓁖}
+\defhieroglyph{B7}{𓁗}
+\defhieroglyph{B8}{𓁘}
+\defhieroglyph{B47}{𓁙}
+\defhieroglyph{C1}{𓁚}
+\defhieroglyph{C2}{𓁛}
+\defhieroglyph{C2A}{𓁜}
+\defhieroglyph{US1C2BEXTU}{𓁝}
+\defhieroglyph{US1C2CEXTU}{𓁞}
+\defhieroglyph{C3}{𓁟}
+\defhieroglyph{C4}{𓁠}
+\defhieroglyph{C5}{𓁡}
+\defhieroglyph{C6}{𓁢}
+\defhieroglyph{C7}{𓁣}
+\defhieroglyph{C8}{𓁤}
+\defhieroglyph{C9}{𓁥}
+\defhieroglyph{C10}{𓁦}
+\defhieroglyph{C10A}{𓁧}
+\defhieroglyph{C11}{𓁨}
+\defhieroglyph{C12}{𓁩}
+\defhieroglyph{US1C13EXTU}{𓁪}
+\defhieroglyph{C14}{𓁫}
+\defhieroglyph{US1C15EXTU}{𓁬}
+\defhieroglyph{C16}{𓁭}
+\defhieroglyph{C17}{𓁮}
+\defhieroglyph{C18}{𓁯}
+\defhieroglyph{C19}{𓁰}
+\defhieroglyph{C20}{𓁱}
+\defhieroglyph{C33}{𓁲}
+\defhieroglyph{C49B}{𓁳}
+\defhieroglyph{C165}{𓁴}
+\defhieroglyph{A45B}{𓁵}
+\defhieroglyph{D1}{𓁶}
+\defhieroglyph{D2}{𓁷}
+\defhieroglyph{D3}{𓁸}
+\defhieroglyph{D4}{𓁹}
+\defhieroglyph{D5}{𓁺}
+\defhieroglyph{D6}{𓁻}
+\defhieroglyph{D7}{𓁼}
+\defhieroglyph{D8}{𓁽}
+\defhieroglyph{D8A}{𓁾}
+\defhieroglyph{D9}{𓁿}
+\defhieroglyph{D10}{𓂀}
+\defhieroglyph{D11}{𓂁}
+\defhieroglyph{D12}{𓂂}
+\defhieroglyph{D13}{𓂃}
+\defhieroglyph{D14}{𓂄}
+\defhieroglyph{D15}{𓂅}
+\defhieroglyph{D16}{𓂆}
+\defhieroglyph{D17}{𓂇}
+\defhieroglyph{D18}{𓂈}
+\defhieroglyph{D19}{𓂉}
+\defhieroglyph{D20}{𓂊}
+\defhieroglyph{D21}{𓂋}
+\defhieroglyph{D22}{𓂌}
+\defhieroglyph{D23}{𓂍}
+\defhieroglyph{D24}{𓂎}
+\defhieroglyph{D25}{𓂏}
+\defhieroglyph{D26}{𓂐}
+\defhieroglyph{D27}{𓂑}
+\defhieroglyph{D27A}{𓂒}
+\defhieroglyph{D28}{𓂓}
+\defhieroglyph{D29}{𓂔}
+\defhieroglyph{D30}{𓂕}
+\defhieroglyph{D31}{𓂖}
+\defhieroglyph{D31A}{𓂗}
+\defhieroglyph{D32}{𓂘}
+\defhieroglyph{D33}{𓂙}
+\defhieroglyph{D34}{𓂚}
+\defhieroglyph{D34A}{𓂛}
+\defhieroglyph{D35}{𓂜}
+\defhieroglyph{D36}{𓂝}
+\defhieroglyph{D37}{𓂞}
+\defhieroglyph{D38}{𓂟}
+\defhieroglyph{D39}{𓂠}
+\defhieroglyph{D40}{𓂡}
+\defhieroglyph{D41}{𓂢}
+\defhieroglyph{D42}{𓂣}
+\defhieroglyph{D43}{𓂤}
+\defhieroglyph{D44}{𓂥}
+\defhieroglyph{D45}{𓂦}
+\defhieroglyph{D46}{𓂧}
+\defhieroglyph{D46A}{𓂨}
+\defhieroglyph{D47}{𓂩}
+\defhieroglyph{D48}{𓂪}
+\defhieroglyph{D48A}{𓂫}
+\defhieroglyph{D49}{𓂬}
+\defhieroglyph{D50}{𓂭}
+\defhieroglyph{US1D50AEXTU}{𓂮}
+\defhieroglyph{US1D50BEXTU}{𓂯}
+\defhieroglyph{US1D50CEXTU}{𓂰}
+\defhieroglyph{US1D50DEXTU}{𓂱}
+\defhieroglyph{US1D50EEXTU}{𓂲}
+\defhieroglyph{US1D50FEXTU}{𓂳}
+\defhieroglyph{US1D50GEXTU}{𓂴}
+\defhieroglyph{US1D50HEXTU}{𓂵}
+\defhieroglyph{US1D50IEXTU}{𓂶}
+\defhieroglyph{D51}{𓂷}
+\defhieroglyph{D52}{𓂸}
+\defhieroglyph{S125}{𓂹}
+\defhieroglyph{D53}{𓂺}
+\defhieroglyph{D54}{𓂻}
+\defhieroglyph{D54A}{𓂼}
+\defhieroglyph{D55}{𓂽}
+\defhieroglyph{D56}{𓂾}
+\defhieroglyph{D57}{𓂿}
+\defhieroglyph{D58}{𓃀}
+\defhieroglyph{D59}{𓃁}
+\defhieroglyph{D60}{𓃂}
+\defhieroglyph{D61}{𓃃}
+\defhieroglyph{D62}{𓃄}
+\defhieroglyph{D63}{𓃅}
+\defhieroglyph{D271}{𓃆}
+\defhieroglyph{D132}{𓃇}
+\defhieroglyph{D66}{𓃈}
+\defhieroglyph{N33}{𓃉}
+\defhieroglyph{US1D67AEXTU}{𓃊}
+\defhieroglyph{US1D67BEXTU}{𓃋}
+\defhieroglyph{US1D67CEXTU}{𓃌}
+\defhieroglyph{US1D67DEXTU}{𓃍}
+\defhieroglyph{US1D67EEXTU}{𓃎}
+\defhieroglyph{US1D67FEXTU}{𓃏}
+\defhieroglyph{US1D67GEXTU}{𓃐}
+\defhieroglyph{US1D67HEXTU}{𓃑}
+\defhieroglyph{E1}{𓃒}
+\defhieroglyph{E2}{𓃓}
+\defhieroglyph{E3}{𓃔}
+\defhieroglyph{E4}{𓃕}
+\defhieroglyph{E5}{𓃖}
+\defhieroglyph{E6}{𓃗}
+\defhieroglyph{E7}{𓃘}
+\defhieroglyph{E8}{𓃙}
+\defhieroglyph{E8A}{𓃚}
+\defhieroglyph{E9}{𓃛}
+\defhieroglyph{E100}{𓃜}
+\defhieroglyph{E10}{𓃝}
+\defhieroglyph{E11}{𓃞}
+\defhieroglyph{E12}{𓃟}
+\defhieroglyph{E13}{𓃠}
+\defhieroglyph{E14}{𓃡}
+\defhieroglyph{E15}{𓃢}
+\defhieroglyph{E16}{𓃣}
+\defhieroglyph{E16AEXTU}{𓃤}
+\defhieroglyph{E17}{𓃥}
+\defhieroglyph{E141}{𓃦}
+\defhieroglyph{E18}{𓃧}
+\defhieroglyph{E19}{𓃨}
+\defhieroglyph{E20}{𓃩}
+\defhieroglyph{E147}{𓃪}
+\defhieroglyph{E21}{𓃫}
+\defhieroglyph{E22}{𓃬}
+\defhieroglyph{E23}{𓃭}
+\defhieroglyph{E24}{𓃮}
+\defhieroglyph{E25}{𓃯}
+\defhieroglyph{E26}{𓃰}
+\defhieroglyph{E27}{𓃱}
+\defhieroglyph{E28}{𓃲}
+\defhieroglyph{US1E28AEXTU}{𓃳}
+\defhieroglyph{E29}{𓃴}
+\defhieroglyph{E30}{𓃵}
+\defhieroglyph{E31}{𓃶}
+\defhieroglyph{E32}{𓃷}
+\defhieroglyph{E33}{𓃸}
+\defhieroglyph{E34}{𓃹}
+\defhieroglyph{E34}{𓃺}
+\defhieroglyph{E35}{𓃻}
+\defhieroglyph{E45}{𓃼}
+\defhieroglyph{E92}{𓃽}
+\defhieroglyph{F1}{𓃾}
+\defhieroglyph{F63}{𓃿}
+\defhieroglyph{F2}{𓄀}
+\defhieroglyph{F3}{𓄁}
+\defhieroglyph{F4}{𓄂}
+\defhieroglyph{F5}{𓄃}
+\defhieroglyph{F6}{𓄄}
+\defhieroglyph{F7}{𓄅}
+\defhieroglyph{F8}{𓄆}
+\defhieroglyph{F9}{𓄇}
+\defhieroglyph{F10}{𓄈}
+\defhieroglyph{F11}{𓄉}
+\defhieroglyph{F12}{𓄊}
+\defhieroglyph{F13}{𓄋}
+\defhieroglyph{F13}{𓄌}
+\defhieroglyph{F14}{𓄍}
+\defhieroglyph{F15}{𓄎}
+\defhieroglyph{F16}{𓄏}
+\defhieroglyph{F17}{𓄐}
+\defhieroglyph{F18}{𓄑}
+\defhieroglyph{F19}{𓄒}
+\defhieroglyph{F20}{𓄓}
+\defhieroglyph{F21}{𓄔}
+\defhieroglyph{Ff4}{𓄕}
+\defhieroglyph{F22}{𓄖}
+\defhieroglyph{F23}{𓄗}
+\defhieroglyph{F24}{𓄘}
+\defhieroglyph{F25}{𓄙}
+\defhieroglyph{F26}{𓄚}
+\defhieroglyph{F27}{𓄛}
+\defhieroglyph{F28}{𓄜}
+\defhieroglyph{F29}{𓄝}
+\defhieroglyph{F30}{𓄞}
+\defhieroglyph{F31}{𓄟}
+\defhieroglyph{US22F31AEXTU}{𓄠}
+\defhieroglyph{F32}{𓄡}
+\defhieroglyph{F33}{𓄢}
+\defhieroglyph{F34}{𓄣}
+\defhieroglyph{F35}{𓄤}
+\defhieroglyph{F36}{𓄥}
+\defhieroglyph{F37}{𓄦}
+\defhieroglyph{F37B}{𓄧}
+\defhieroglyph{F38}{𓄨}
+\defhieroglyph{F38C}{𓄩}
+\defhieroglyph{F39}{𓄪}
+\defhieroglyph{F40}{𓄫}
+\defhieroglyph{F41}{𓄬}
+\defhieroglyph{F42}{𓄭}
+\defhieroglyph{F43}{𓄮}
+\defhieroglyph{F44}{𓄯}
+\defhieroglyph{F45}{𓄰}
+\defhieroglyph{Aa56}{𓄱}
+\defhieroglyph{F46}{𓄲}
+\defhieroglyph{F46A}{𓄳}
+\defhieroglyph{F47}{𓄴}
+\defhieroglyph{F47A}{𓄵}
+\defhieroglyph{F48}{𓄶}
+\defhieroglyph{F49}{𓄷}
+\defhieroglyph{F50}{𓄸}
+\defhieroglyph{F51}{𓄹}
+\defhieroglyph{US1F51AEXTU}{𓄺}
+\defhieroglyph{US1F51BEXTU}{𓄻}
+\defhieroglyph{F51A}{𓄼}
+\defhieroglyph{F52}{𓄽}
+\defhieroglyph{F59}{𓄾}
+\defhieroglyph{G1}{𓄿}
+\defhieroglyph{G2}{𓅀}
+\defhieroglyph{G3}{𓅁}
+\defhieroglyph{G4}{𓅂}
+\defhieroglyph{G5}{𓅃}
+\defhieroglyph{G6}{𓅄}
+\defhieroglyph{G139}{𓅅}
+\defhieroglyph{G7}{𓅆}
+\defhieroglyph{G7A}{𓅇}
+\defhieroglyph{G7B}{𓅈}
+\defhieroglyph{G8}{𓅉}
+\defhieroglyph{G9}{𓅊}
+\defhieroglyph{G10}{𓅋}
+\defhieroglyph{G11}{𓅌}
+\defhieroglyph{G11A}{𓅍}
+\defhieroglyph{G12}{𓅎}
+\defhieroglyph{G13}{𓅏}
+\defhieroglyph{G14}{𓅐}
+\defhieroglyph{G15}{𓅑}
+\defhieroglyph{G16}{𓅒}
+\defhieroglyph{G17}{𓅓}
+\defhieroglyph{G18}{𓅔}
+\defhieroglyph{G19}{𓅕}
+\defhieroglyph{G20}{𓅖}
+\defhieroglyph{G90}{𓅗}
+\defhieroglyph{G21}{𓅘}
+\defhieroglyph{G22}{𓅙}
+\defhieroglyph{G23}{𓅚}
+\defhieroglyph{G24}{𓅛}
+\defhieroglyph{G25}{𓅜}
+\defhieroglyph{G26}{𓅝}
+\defhieroglyph{G26A}{𓅞}
+\defhieroglyph{G27}{𓅟}
+\defhieroglyph{G28}{𓅠}
+\defhieroglyph{G29}{𓅡}
+\defhieroglyph{G30}{𓅢}
+\defhieroglyph{G31}{𓅣}
+\defhieroglyph{G32}{𓅤}
+\defhieroglyph{G33}{𓅥}
+\defhieroglyph{G34}{𓅦}
+\defhieroglyph{G35}{𓅧}
+\defhieroglyph{G36}{𓅨}
+\defhieroglyph{G36}{𓅩}
+\defhieroglyph{G37}{𓅪}
+\defhieroglyph{G37}{𓅫}
+\defhieroglyph{G38}{𓅬}
+\defhieroglyph{G39}{𓅭}
+\defhieroglyph{G40}{𓅮}
+\defhieroglyph{G41}{𓅯}
+\defhieroglyph{G42}{𓅰}
+\defhieroglyph{G43}{𓅱}
+\defhieroglyph{US1G43AEXTU}{𓅲}
+\defhieroglyph{G44}{𓅳}
+\defhieroglyph{G45}{𓅴}
+\defhieroglyph{G247}{𓅵}
+\defhieroglyph{G46}{𓅶}
+\defhieroglyph{G47}{𓅷}
+\defhieroglyph{G48}{𓅸}
+\defhieroglyph{G49}{𓅹}
+\defhieroglyph{G50}{𓅺}
+\defhieroglyph{G51}{𓅻}
+\defhieroglyph{G52}{𓅼}
+\defhieroglyph{G53}{𓅽}
+\defhieroglyph{G54}{𓅾}
+\defhieroglyph{H1}{𓅿}
+\defhieroglyph{H2}{𓆀}
+\defhieroglyph{H3}{𓆁}
+\defhieroglyph{H4}{𓆂}
+\defhieroglyph{H5}{𓆃}
+\defhieroglyph{H6}{𓆄}
+\defhieroglyph{H6A}{𓆅}
+\defhieroglyph{H7}{𓆆}
+\defhieroglyph{H8}{𓆇}
+\defhieroglyph{I1}{𓆈}
+\defhieroglyph{I2}{𓆉}
+\defhieroglyph{I3}{𓆊}
+\defhieroglyph{I4}{𓆋}
+\defhieroglyph{I5}{𓆌}
+\defhieroglyph{I5A}{𓆍}
+\defhieroglyph{I6}{𓆎}
+\defhieroglyph{I7}{𓆏}
+\defhieroglyph{I8}{𓆐}
+\defhieroglyph{I9}{𓆑}
+\defhieroglyph{I24}{𓆒}
+\defhieroglyph{I10}{𓆓}
+\defhieroglyph{I31}{𓆔}
+\defhieroglyph{I11}{𓆕}
+\defhieroglyph{US1I11AEXTU}{𓆖}
+\defhieroglyph{I12}{𓆗}
+\defhieroglyph{I13}{𓆘}
+\defhieroglyph{I14}{𓆙}
+\defhieroglyph{I15}{𓆚}
+\defhieroglyph{K1}{𓆛}
+\defhieroglyph{K2}{𓆜}
+\defhieroglyph{K3}{𓆝}
+\defhieroglyph{K4}{𓆞}
+\defhieroglyph{K5}{𓆟}
+\defhieroglyph{K6}{𓆠}
+\defhieroglyph{K7}{𓆡}
+\defhieroglyph{K13}{𓆢}
+\defhieroglyph{L1}{𓆣}
+\defhieroglyph{L2}{𓆤}
+\defhieroglyph{US1L2AEXTU}{𓆥}
+\defhieroglyph{US1L3EXTU}{𓆦}
+\defhieroglyph{L4}{𓆧}
+\defhieroglyph{L5}{𓆨}
+\defhieroglyph{L6}{𓆩}
+\defhieroglyph{US1L6AEXTU}{𓆪}
+\defhieroglyph{L7}{𓆫}
+\defhieroglyph{L8}{𓆬}
+\defhieroglyph{M1}{𓆭}
+\defhieroglyph{M1A}{𓆮}
+\defhieroglyph{M1E}{𓆯}
+\defhieroglyph{M2}{𓆰}
+\defhieroglyph{M3}{𓆱}
+\defhieroglyph{M3A}{𓆲}
+\defhieroglyph{M4}{𓆳}
+\defhieroglyph{M5}{𓆴}
+\defhieroglyph{M6}{𓆵}
+\defhieroglyph{M7}{𓆶}
+\defhieroglyph{M8}{𓆷}
+\defhieroglyph{M9}{𓆸}
+\defhieroglyph{M10}{𓆹}
+\defhieroglyph{M72}{𓆺}
+\defhieroglyph{M11}{𓆻}
+\defhieroglyph{M12}{𓆼}
+\defhieroglyph{US1M12AEXTU}{𓆽}
+\defhieroglyph{US1M12BEXTU}{𓆾}
+\defhieroglyph{US1M12CEXTU}{𓆿}
+\defhieroglyph{US1M12DEXTU}{𓇀}
+\defhieroglyph{US1M12EEXTU}{𓇁}
+\defhieroglyph{US1M12FEXTU}{𓇂}
+\defhieroglyph{US1M12GEXTU}{𓇃}
+\defhieroglyph{US1M12HEXTU}{𓇄}
+\defhieroglyph{M13}{𓇅}
+\defhieroglyph{M14}{𓇆}
+\defhieroglyph{M15}{𓇇}
+\defhieroglyph{M139}{𓇈}
+\defhieroglyph{M16}{𓇉}
+\defhieroglyph{M139B}{𓇊}
+\defhieroglyph{M17}{𓇋}
+\defhieroglyph{US1M17AEXTU}{𓇌}
+\defhieroglyph{M18}{𓇍}
+\defhieroglyph{M19}{𓇎}
+\defhieroglyph{M20}{𓇏}
+\defhieroglyph{M21}{𓇐}
+\defhieroglyph{M22}{𓇑}
+\defhieroglyph{nn}{𓇒}
+\defhieroglyph{M23}{𓇓}
+\defhieroglyph{M24}{𓇔}
+\defhieroglyph{M127}{𓇕}
+\defhieroglyph{M25}{𓇖}
+\defhieroglyph{M26}{𓇗}
+\defhieroglyph{M27}{𓇘}
+\defhieroglyph{M28}{𓇙}
+\defhieroglyph{M140B}{𓇚}
+\defhieroglyph{M29}{𓇛}
+\defhieroglyph{M30}{𓇜}
+\defhieroglyph{M31}{𓇝}
+\defhieroglyph{US1M31AEXTU}{𓇞}
+\defhieroglyph{M32}{𓇟}
+\defhieroglyph{M33}{𓇠}
+\defhieroglyph{M33A}{𓇡}
+\defhieroglyph{US1M33BEXTU}{𓇢}
+\defhieroglyph{M34}{𓇣}
+\defhieroglyph{M35}{𓇤}
+\defhieroglyph{M36}{𓇥}
+\defhieroglyph{M37}{𓇦}
+\defhieroglyph{M38}{𓇧}
+\defhieroglyph{M39}{𓇨}
+\defhieroglyph{M40}{𓇩}
+\defhieroglyph{US1M40AEXTU}{𓇪}
+\defhieroglyph{M41}{𓇫}
+\defhieroglyph{M42}{𓇬}
+\defhieroglyph{M43}{𓇭}
+\defhieroglyph{M44}{𓇮}
+\defhieroglyph{N1}{𓇯}
+\defhieroglyph{N2}{𓇰}
+\defhieroglyph{N3}{𓇱}
+\defhieroglyph{N4}{𓇲}
+\defhieroglyph{N5}{𓇳}
+\defhieroglyph{N6}{𓇴}
+\defhieroglyph{N7}{𓇵}
+\defhieroglyph{N8}{𓇶}
+\defhieroglyph{N9}{𓇷}
+\defhieroglyph{N10}{𓇸}
+\defhieroglyph{N11}{𓇹}
+\defhieroglyph{N12}{𓇺}
+\defhieroglyph{N13}{𓇻}
+\defhieroglyph{N14}{𓇼}
+\defhieroglyph{N15}{𓇽}
+\defhieroglyph{N16}{𓇾}
+\defhieroglyph{N17}{𓇿}
+\defhieroglyph{N18}{𓈀}
+\defhieroglyph{N102}{𓈁}
+\defhieroglyph{O239}{𓈂}
+\defhieroglyph{N19}{𓈃}
+\defhieroglyph{N20}{𓈄}
+\defhieroglyph{N21}{𓈅}
+\defhieroglyph{N22}{𓈆}
+\defhieroglyph{N23}{𓈇}
+\defhieroglyph{N24}{𓈈}
+\defhieroglyph{N25}{𓈉}
+\defhieroglyph{xAst}{𓈊}
+\defhieroglyph{N26}{𓈋}
+\defhieroglyph{N27}{𓈌}
+\defhieroglyph{N28}{𓈍}
+\defhieroglyph{N29}{𓈎}
+\defhieroglyph{N30}{𓈏}
+\defhieroglyph{N31}{𓈐}
+\defhieroglyph{N32}{𓈑}
+\defhieroglyph{N33}{𓈒}
+\defhieroglyph{N33A}{𓈓}
+\defhieroglyph{N34}{𓈔}
+\defhieroglyph{N34}{𓈕}
+\defhieroglyph{N35}{𓈖}
+\defhieroglyph{N35A}{𓈗}
+\defhieroglyph{N36}{𓈘}
+\defhieroglyph{N37}{𓈙}
+\defhieroglyph{N37A}{𓈚}
+\defhieroglyph{N38}{𓈛}
+\defhieroglyph{N39}{𓈜}
+\defhieroglyph{N40}{𓈝}
+\defhieroglyph{N41}{𓈞}
+\defhieroglyph{N42}{𓈟}
+\defhieroglyph{NL1}{𓈠}
+\defhieroglyph{NL2}{𓈡}
+\defhieroglyph{NL3}{𓈢}
+\defhieroglyph{NL4}{𓈣}
+\defhieroglyph{NL5}{𓈤}
+\defhieroglyph{NL5a}{𓈥}
+\defhieroglyph{NL6}{𓈦}
+\defhieroglyph{NL7}{𓈧}
+\defhieroglyph{NL8}{𓈨}
+\defhieroglyph{NL9}{𓈩}
+\defhieroglyph{NL10}{𓈪}
+\defhieroglyph{NL11}{𓈫}
+\defhieroglyph{NL12}{𓈬}
+\defhieroglyph{NL13}{𓈭}
+\defhieroglyph{NL14}{𓈮}
+\defhieroglyph{NL15}{𓈯}
+\defhieroglyph{NL16}{𓈰}
+\defhieroglyph{NL17}{𓈱}
+\defhieroglyph{NL17a}{𓈲}
+\defhieroglyph{NL18}{𓈳}
+\defhieroglyph{NL19}{𓈴}
+\defhieroglyph{NL20}{𓈵}
+\defhieroglyph{NU1}{𓈶}
+\defhieroglyph{NU2}{𓈷}
+\defhieroglyph{NU3}{𓈸}
+\defhieroglyph{NU4}{𓈹}
+\defhieroglyph{NU5}{𓈺}
+\defhieroglyph{NU6}{𓈻}
+\defhieroglyph{NU7}{𓈼}
+\defhieroglyph{NU8}{𓈽}
+\defhieroglyph{NU9}{𓈾}
+\defhieroglyph{NU10}{𓈿}
+\defhieroglyph{NU10a}{𓉀}
+\defhieroglyph{NU11}{𓉁}
+\defhieroglyph{NU11a}{𓉂}
+\defhieroglyph{NU12}{𓉃}
+\defhieroglyph{NU13}{𓉄}
+\defhieroglyph{NU14}{𓉅}
+\defhieroglyph{NU15}{𓉆}
+\defhieroglyph{NU16}{𓉇}
+\defhieroglyph{NU17}{𓉈}
+\defhieroglyph{NU18}{𓉉}
+\defhieroglyph{NU18a}{𓉊}
+\defhieroglyph{NU19}{𓉋}
+\defhieroglyph{NU20}{𓉌}
+\defhieroglyph{NU21}{𓉍}
+\defhieroglyph{NU22}{𓉎}
+\defhieroglyph{NU22a}{𓉏}
+\defhieroglyph{O1}{𓉐}
+\defhieroglyph{O54}{𓉑}
+\defhieroglyph{O2}{𓉒}
+\defhieroglyph{O3}{𓉓}
+\defhieroglyph{O4}{𓉔}
+\defhieroglyph{O5}{𓉕}
+\defhieroglyph{O5U}{𓉖}
+\defhieroglyph{O6}{𓉗}
+\defhieroglyph{US1O6AEXTU}{𓉘}
+\defhieroglyph{US1O6BEXTU}{𓉙}
+\defhieroglyph{US1O6CEXTU}{𓉚}
+\defhieroglyph{US1O6DEXTU}{𓉛}
+\defhieroglyph{US1O6EEXTU}{𓉜}
+\defhieroglyph{US1O6FEXTU}{𓉝}
+\defhieroglyph{O7}{𓉞}
+\defhieroglyph{O8}{𓉟}
+\defhieroglyph{O9}{𓉠}
+\defhieroglyph{O10}{𓉡}
+\defhieroglyph{O10A}{𓉢}
+\defhieroglyph{US1O10BEXTU}{𓉣}
+\defhieroglyph{US248O10CEXTU}{𓉤}
+\defhieroglyph{O11}{𓉥}
+\defhieroglyph{O12}{𓉦}
+\defhieroglyph{O13}{𓉧}
+\defhieroglyph{O14}{𓉨}
+\defhieroglyph{O15}{𓉩}
+\defhieroglyph{O16}{𓉪}
+\defhieroglyph{O17}{𓉫}
+\defhieroglyph{O18}{𓉬}
+\defhieroglyph{O19}{𓉭}
+\defhieroglyph{O19A}{𓉮}
+\defhieroglyph{O20}{𓉯}
+\defhieroglyph{O20A}{𓉰}
+\defhieroglyph{O21}{𓉱}
+\defhieroglyph{O22}{𓉲}
+\defhieroglyph{O23}{𓉳}
+\defhieroglyph{O24}{𓉴}
+\defhieroglyph{O24A}{𓉵}
+\defhieroglyph{O25}{𓉶}
+\defhieroglyph{O190}{𓉷}
+\defhieroglyph{O26}{𓉸}
+\defhieroglyph{O27}{𓉹}
+\defhieroglyph{O28}{𓉺}
+\defhieroglyph{O29}{𓉻}
+\defhieroglyph{O29v}{𓉼}
+\defhieroglyph{O30}{𓉽}
+\defhieroglyph{US1O30AEXTU}{𓉾}
+\defhieroglyph{O31}{𓉿}
+\defhieroglyph{O32}{𓊀}
+\defhieroglyph{O33}{𓊁}
+\defhieroglyph{US1O33AEXTU}{𓊂}
+\defhieroglyph{O34}{𓊃}
+\defhieroglyph{O35}{𓊄}
+\defhieroglyph{O36}{𓊅}
+\defhieroglyph{US1O36AEXTU}{𓊆}
+\defhieroglyph{US1O36BEXTU}{𓊇}
+\defhieroglyph{US1O36CEXTU}{𓊈}
+\defhieroglyph{US1O36DEXTU}{𓊉}
+\defhieroglyph{O37}{𓊊}
+\defhieroglyph{O38}{𓊋}
+\defhieroglyph{O39}{𓊌}
+\defhieroglyph{O40}{𓊍}
+\defhieroglyph{O41}{𓊎}
+\defhieroglyph{O42}{𓊏}
+\defhieroglyph{O43}{𓊐}
+\defhieroglyph{O44}{𓊑}
+\defhieroglyph{O45}{𓊒}
+\defhieroglyph{O46}{𓊓}
+\defhieroglyph{O47}{𓊔}
+\defhieroglyph{O48}{𓊕}
+\defhieroglyph{O49}{𓊖}
+\defhieroglyph{O50}{𓊗}
+\defhieroglyph{Ff8}{𓊘}
+\defhieroglyph{Ff8A}{𓊙}
+\defhieroglyph{O51}{𓊚}
+\defhieroglyph{P1}{𓊛}
+\defhieroglyph{P1A}{𓊜}
+\defhieroglyph{P2}{𓊝}
+\defhieroglyph{P3}{𓊞}
+\defhieroglyph{US1P3AEXTU}{𓊟}
+\defhieroglyph{P4}{𓊠}
+\defhieroglyph{P5}{𓊡}
+\defhieroglyph{P6}{𓊢}
+\defhieroglyph{P7}{𓊣}
+\defhieroglyph{P8}{𓊤}
+\defhieroglyph{P9}{𓊥}
+\defhieroglyph{P10}{𓊦}
+\defhieroglyph{P11}{𓊧}
+\defhieroglyph{Q1}{𓊨}
+\defhieroglyph{Q2}{𓊩}
+\defhieroglyph{Q3}{𓊪}
+\defhieroglyph{Q4}{𓊫}
+\defhieroglyph{Q5}{𓊬}
+\defhieroglyph{Q6}{𓊭}
+\defhieroglyph{Q7}{𓊮}
+\defhieroglyph{R1}{𓊯}
+\defhieroglyph{R2}{𓊰}
+\defhieroglyph{R1h}{𓊱}
+\defhieroglyph{R3}{𓊲}
+\defhieroglyph{R3P}{𓊳}
+\defhieroglyph{R3PA}{𓊴}
+\defhieroglyph{R4}{𓊵}
+\defhieroglyph{R5}{𓊶}
+\defhieroglyph{R6}{𓊷}
+\defhieroglyph{R7}{𓊸}
+\defhieroglyph{R8}{𓊹}
+\defhieroglyph{R9}{𓊺}
+\defhieroglyph{R10}{𓊻}
+\defhieroglyph{R50}{𓊼}
+\defhieroglyph{R11}{𓊽}
+\defhieroglyph{R12}{𓊾}
+\defhieroglyph{R13}{𓊿}
+\defhieroglyph{R14}{𓋀}
+\defhieroglyph{R15}{𓋁}
+\defhieroglyph{R16}{𓋂}
+\defhieroglyph{R16B}{𓋃}
+\defhieroglyph{R17}{𓋄}
+\defhieroglyph{R18}{𓋅}
+\defhieroglyph{R19}{𓋆}
+\defhieroglyph{R20}{𓋇}
+\defhieroglyph{R21}{𓋈}
+\defhieroglyph{R22}{𓋉}
+\defhieroglyph{R23}{𓋊}
+\defhieroglyph{R24}{𓋋}
+\defhieroglyph{R25}{𓋌}
+\defhieroglyph{R26}{𓋍}
+\defhieroglyph{T63B}{𓋎}
+\defhieroglyph{R129}{𓋏}
+\defhieroglyph{O196}{𓋐}
+\defhieroglyph{S1}{𓋑}
+\defhieroglyph{S2}{𓋒}
+\defhieroglyph{S48}{𓋓}
+\defhieroglyph{S3}{𓋔}
+\defhieroglyph{S4}{𓋕}
+\defhieroglyph{S5}{𓋖}
+\defhieroglyph{S6}{𓋗}
+\defhieroglyph{S50}{𓋘}
+\defhieroglyph{S7}{𓋙}
+\defhieroglyph{S8}{𓋚}
+\defhieroglyph{S9}{𓋛}
+\defhieroglyph{S10}{𓋜}
+\defhieroglyph{S11}{𓋝}
+\defhieroglyph{S12}{𓋞}
+\defhieroglyph{S13}{𓋟}
+\defhieroglyph{S14}{𓋠}
+\defhieroglyph{S14A}{𓋡}
+\defhieroglyph{US1S14BEXTU}{𓋢}
+\defhieroglyph{S15}{𓋣}
+\defhieroglyph{S16}{𓋤}
+\defhieroglyph{S17}{𓋥}
+\defhieroglyph{S197}{𓋦}
+\defhieroglyph{S18}{𓋧}
+\defhieroglyph{S19}{𓋨}
+\defhieroglyph{S20}{𓋩}
+\defhieroglyph{S21}{𓋪}
+\defhieroglyph{S22}{𓋫}
+\defhieroglyph{S23}{𓋬}
+\defhieroglyph{S24}{𓋭}
+\defhieroglyph{S25}{𓋮}
+\defhieroglyph{S26}{𓋯}
+\defhieroglyph{iw}{𓋰}
+\defhieroglyph{US1S26BEXTU}{𓋱}
+\defhieroglyph{S27}{𓋲}
+\defhieroglyph{S28}{𓋳}
+\defhieroglyph{S29}{𓋴}
+\defhieroglyph{S30}{𓋵}
+\defhieroglyph{S31}{𓋶}
+\defhieroglyph{S32}{𓋷}
+\defhieroglyph{S33}{𓋸}
+\defhieroglyph{S34}{𓋹}
+\defhieroglyph{S35}{𓋺}
+\defhieroglyph{US1S35ABEXTU}{𓋻}
+\defhieroglyph{S36}{𓋼}
+\defhieroglyph{S37}{𓋽}
+\defhieroglyph{S38}{𓋾}
+\defhieroglyph{S39}{𓋿}
+\defhieroglyph{S40}{𓌀}
+\defhieroglyph{S41}{𓌁}
+\defhieroglyph{S42}{𓌂}
+\defhieroglyph{S43}{𓌃}
+\defhieroglyph{S44}{𓌄}
+\defhieroglyph{S45}{𓌅}
+\defhieroglyph{S56}{𓌆}
+\defhieroglyph{T1}{𓌇}
+\defhieroglyph{T2}{𓌈}
+\defhieroglyph{T3}{𓌉}
+\defhieroglyph{T43}{𓌊}
+\defhieroglyph{T4}{𓌋}
+\defhieroglyph{T5}{𓌌}
+\defhieroglyph{T6}{𓌍}
+\defhieroglyph{T7}{𓌎}
+\defhieroglyph{T7A}{𓌏}
+\defhieroglyph{T8}{𓌐}
+\defhieroglyph{T8A}{𓌑}
+\defhieroglyph{T9}{𓌒}
+\defhieroglyph{T9A}{𓌓}
+\defhieroglyph{T10}{𓌔}
+\defhieroglyph{T11}{𓌕}
+\defhieroglyph{T60}{𓌖}
+\defhieroglyph{T12}{𓌗}
+\defhieroglyph{T13}{𓌘}
+\defhieroglyph{T14}{𓌙}
+\defhieroglyph{T15}{𓌚}
+\defhieroglyph{T16}{𓌛}
+\defhieroglyph{T16A}{𓌜}
+\defhieroglyph{T17}{𓌝}
+\defhieroglyph{T18}{𓌞}
+\defhieroglyph{T19}{𓌟}
+\defhieroglyph{T20}{𓌠}
+\defhieroglyph{T21}{𓌡}
+\defhieroglyph{T22}{𓌢}
+\defhieroglyph{T23}{𓌣}
+\defhieroglyph{T24}{𓌤}
+\defhieroglyph{T25}{𓌥}
+\defhieroglyph{T26}{𓌦}
+\defhieroglyph{T27}{𓌧}
+\defhieroglyph{T28}{𓌨}
+\defhieroglyph{T29}{𓌩}
+\defhieroglyph{T30}{𓌪}
+\defhieroglyph{T31}{𓌫}
+\defhieroglyph{T32}{𓌬}
+\defhieroglyph{S123}{𓌭}
+\defhieroglyph{T33}{𓌮}
+\defhieroglyph{US1T33AEXTU}{𓌯}
+\defhieroglyph{T34}{𓌰}
+\defhieroglyph{T35}{𓌱}
+\defhieroglyph{T36}{𓌲}
+\defhieroglyph{U1}{𓌳}
+\defhieroglyph{U2}{𓌴}
+\defhieroglyph{U3}{𓌵}
+\defhieroglyph{U4}{𓌶}
+\defhieroglyph{U5}{𓌷}
+\defhieroglyph{U6}{𓌸}
+\defhieroglyph{US1U6AEXTU}{𓌹}
+\defhieroglyph{US1U6BEXTU}{𓌺}
+\defhieroglyph{U7}{𓌻}
+\defhieroglyph{U8}{𓌼}
+\defhieroglyph{U9}{𓌽}
+\defhieroglyph{U10}{𓌾}
+\defhieroglyph{U11}{𓌿}
+\defhieroglyph{U12}{𓍀}
+\defhieroglyph{U13}{𓍁}
+\defhieroglyph{U14}{𓍂}
+\defhieroglyph{U15}{𓍃}
+\defhieroglyph{U16}{𓍄}
+\defhieroglyph{U17}{𓍅}
+\defhieroglyph{U18}{𓍆}
+\defhieroglyph{U19}{𓍇}
+\defhieroglyph{U20}{𓍈}
+\defhieroglyph{U21}{𓍉}
+\defhieroglyph{U22}{𓍊}
+\defhieroglyph{U23}{𓍋}
+\defhieroglyph{U23A}{𓍌}
+\defhieroglyph{U24}{𓍍}
+\defhieroglyph{U25}{𓍎}
+\defhieroglyph{U26}{𓍏}
+\defhieroglyph{U27}{𓍐}
+\defhieroglyph{U28}{𓍑}
+\defhieroglyph{U29}{𓍒}
+\defhieroglyph{U29A}{𓍓}
+\defhieroglyph{U30}{𓍔}
+\defhieroglyph{U31}{𓍕}
+\defhieroglyph{U32}{𓍖}
+\defhieroglyph{Ff7}{𓍗}
+\defhieroglyph{U33}{𓍘}
+\defhieroglyph{U34}{𓍙}
+\defhieroglyph{U35}{𓍚}
+\defhieroglyph{U36}{𓍛}
+\defhieroglyph{U37}{𓍜}
+\defhieroglyph{U38}{𓍝}
+\defhieroglyph{U39}{𓍞}
+\defhieroglyph{U40}{𓍟}
+\defhieroglyph{U41}{𓍠}
+\defhieroglyph{O30U}{𓍡}
+\defhieroglyph{V1}{𓍢}
+\defhieroglyph{200}{𓍣}
+\defhieroglyph{300}{𓍤}
+\defhieroglyph{400}{𓍥}
+\defhieroglyph{US1V1DEXTU}{𓍦}
+\defhieroglyph{US1V1EEXTU}{𓍧}
+\defhieroglyph{US1V1FEXTU}{𓍨}
+\defhieroglyph{US1V1GEXTU}{𓍩}
+\defhieroglyph{US1V1HEXTU}{𓍪}
+\defhieroglyph{500}{𓍫}
+\defhieroglyph{V2}{𓍬}
+\defhieroglyph{Ff6}{𓍭}
+\defhieroglyph{V3}{𓍮}
+\defhieroglyph{V4}{𓍯}
+\defhieroglyph{V5}{𓍰}
+\defhieroglyph{V6}{𓍱}
+\defhieroglyph{V7}{𓍲}
+\defhieroglyph{V60}{𓍳}
+\defhieroglyph{V49A}{𓍴}
+\defhieroglyph{V8}{𓍵}
+\defhieroglyph{V9}{𓍶}
+\defhieroglyph{V10}{𓍷}
+\defhieroglyph{V11}{𓍸}
+\defhieroglyph{US1V11AEXTU}{𓍹}
+\defhieroglyph{US1V11BEXTU}{𓍺}
+\defhieroglyph{US1V11CEXTU}{𓍻}
+\defhieroglyph{V12}{𓍼}
+\defhieroglyph{H27}{𓍽}
+\defhieroglyph{US1V12BEXTU}{𓍾}
+\defhieroglyph{V13}{𓍿}
+\defhieroglyph{V14}{𓎀}
+\defhieroglyph{V15}{𓎁}
+\defhieroglyph{V16}{𓎂}
+\defhieroglyph{V17}{𓎃}
+\defhieroglyph{V18}{𓎄}
+\defhieroglyph{V19}{𓎅}
+\defhieroglyph{V20}{𓎆}
+\defhieroglyph{US1V20AEXTU}{𓎇}
+\defhieroglyph{US1V20BEXTU}{𓎈}
+\defhieroglyph{US1V20CEXTU}{𓎉}
+\defhieroglyph{US1V20DEXTU}{𓎊}
+\defhieroglyph{US1V20EEXTU}{𓎋}
+\defhieroglyph{US1V20FEXTU}{𓎌}
+\defhieroglyph{US1V20GEXTU}{𓎍}
+\defhieroglyph{US1V20HEXTU}{𓎎}
+\defhieroglyph{20}{𓎏}
+\defhieroglyph{30}{𓎐}
+\defhieroglyph{40}{𓎑}
+\defhieroglyph{50}{𓎒}
+\defhieroglyph{V21}{𓎓}
+\defhieroglyph{V22}{𓎔}
+\defhieroglyph{V23}{𓎕}
+\defhieroglyph{V23A}{𓎖}
+\defhieroglyph{V24}{𓎗}
+\defhieroglyph{V25}{𓎘}
+\defhieroglyph{V26}{𓎙}
+\defhieroglyph{V27}{𓎚}
+\defhieroglyph{V28}{𓎛}
+\defhieroglyph{V71}{𓎜}
+\defhieroglyph{V29}{𓎝}
+\defhieroglyph{V81}{𓎞}
+\defhieroglyph{V30}{𓎟}
+\defhieroglyph{nb}{𓎠}
+\defhieroglyph{V31}{𓎡}
+\defhieroglyph{V31A}{𓎢}
+\defhieroglyph{V32}{𓎣}
+\defhieroglyph{V33}{𓎤}
+\defhieroglyph{US1V33AEXTU}{𓎥}
+\defhieroglyph{V34}{𓎦}
+\defhieroglyph{V35}{𓎧}
+\defhieroglyph{V36}{𓎨}
+\defhieroglyph{V37}{𓎩}
+\defhieroglyph{F143A}{𓎪}
+\defhieroglyph{V38}{𓎫}
+\defhieroglyph{V39}{𓎬}
+\defhieroglyph{V20h}{𓎭}
+\defhieroglyph{US1V40AEXTU}{𓎮}
+\defhieroglyph{W1}{𓎯}
+\defhieroglyph{W2}{𓎰}
+\defhieroglyph{W3}{𓎱}
+\defhieroglyph{W3}{𓎲}
+\defhieroglyph{W4}{𓎳}
+\defhieroglyph{W5}{𓎴}
+\defhieroglyph{W6}{𓎵}
+\defhieroglyph{W7}{𓎶}
+\defhieroglyph{W8}{𓎷}
+\defhieroglyph{W9}{𓎸}
+\defhieroglyph{W9R}{𓎹}
+\defhieroglyph{W10}{𓎺}
+\defhieroglyph{W10A}{𓎻}
+\defhieroglyph{W11}{𓎼}
+\defhieroglyph{W12}{𓎽}
+\defhieroglyph{W13}{𓎾}
+\defhieroglyph{W14}{𓎿}
+\defhieroglyph{US1W14AEXTU}{𓏀}
+\defhieroglyph{W15}{𓏁}
+\defhieroglyph{W16}{𓏂}
+\defhieroglyph{W17}{𓏃}
+\defhieroglyph{US22W17BVARE}{𓏄}
+\defhieroglyph{W18}{𓏅}
+\defhieroglyph{US22W17BVARD}{𓏆}
+\defhieroglyph{W19}{𓏇}
+\defhieroglyph{W20}{𓏈}
+\defhieroglyph{W21}{𓏉}
+\defhieroglyph{W22}{𓏊}
+\defhieroglyph{W23}{𓏋}
+\defhieroglyph{W24}{𓏌}
+\defhieroglyph{US1W24AEXTU}{𓏍}
+\defhieroglyph{W25}{𓏎}
+\defhieroglyph{X1}{𓏏}
+\defhieroglyph{X2}{𓏐}
+\defhieroglyph{X3}{𓏑}
+\defhieroglyph{X4}{𓏒}
+\defhieroglyph{X4A}{𓏓}
+\defhieroglyph{N18}{𓏔}
+\defhieroglyph{X5}{𓏕}
+\defhieroglyph{X6}{𓏖}
+\defhieroglyph{US1X6AEXTU}{𓏗}
+\defhieroglyph{X7}{𓏘}
+\defhieroglyph{X8}{𓏙}
+\defhieroglyph{M44}{𓏚}
+\defhieroglyph{Y1}{𓏛}
+\defhieroglyph{Y1v}{𓏜}
+\defhieroglyph{Y2}{𓏝}
+\defhieroglyph{Y3}{𓏞}
+\defhieroglyph{Y4}{𓏟}
+\defhieroglyph{Y5}{𓏠}
+\defhieroglyph{Y6}{𓏡}
+\defhieroglyph{Y7}{𓏢}
+\defhieroglyph{Y8}{𓏣}
+\defhieroglyph{Z1}{𓏤}
+\defhieroglyph{Z2}{𓏥}
+\defhieroglyph{US1Z2AEXTU}{𓏦}
+\defhieroglyph{N33A}{𓏧}
+\defhieroglyph{Z2A}{𓏨}
+\defhieroglyph{Z2B}{𓏩}
+\defhieroglyph{Z3}{𓏪}
+\defhieroglyph{Z3A}{𓏫}
+\defhieroglyph{N33AV}{𓏬}
+\defhieroglyph{Z4}{𓏭}
+\defhieroglyph{Z4A}{𓏮}
+\defhieroglyph{Z5}{𓏯}
+\defhieroglyph{Ff203}{𓏰}
+\defhieroglyph{Z6}{𓏱}
+\defhieroglyph{Z7}{𓏲}
+\defhieroglyph{Z8}{𓏳}
+\defhieroglyph{Z9}{𓏴}
+\defhieroglyph{Z10}{𓏵}
+\defhieroglyph{Z11}{𓏶}
+\defhieroglyph{Z12}{𓏷}
+\defhieroglyph{US1Z13EXTU}{𓏸}
+\defhieroglyph{Ff1}{𓏹}
+\defhieroglyph{Ff301}{𓏺}
+\defhieroglyph{Ff302}{𓏻}
+\defhieroglyph{Ff303}{𓏼}
+\defhieroglyph{Ff304}{𓏽}
+\defhieroglyph{US1Z15DEXTU}{𓏾}
+\defhieroglyph{US1Z15EEXTU}{𓏿}
+\defhieroglyph{US1Z15FEXTU}{𓐀}
+\defhieroglyph{US1Z15GEXTU}{𓐁}
+\defhieroglyph{US1Z15HEXTU}{𓐂}
+\defhieroglyph{Z1A}{𓐄}
+\defhieroglyph{Z4B}{𓐅}
+\defhieroglyph{US1Z16BEXTU}{𓐆}
+\defhieroglyph{US1Z16CEXTU}{𓐇}
+\defhieroglyph{US1Z16DEXTU}{𓐈}
+\defhieroglyph{US1Z16EEXTU}{𓐉}
+\defhieroglyph{US1Z16FEXTU}{𓐊}
+\defhieroglyph{US1Z16GEXTU}{𓐋}
+\defhieroglyph{US1Z16HEXTU}{𓐌}
+\defhieroglyph{Aa1}{𓐍}
+\defhieroglyph{Aa2}{𓐎}
+\defhieroglyph{Aa3}{𓐏}
+\defhieroglyph{Aa4}{𓐐}
+\defhieroglyph{Aa5}{𓐑}
+\defhieroglyph{Aa6}{𓐒}
+\defhieroglyph{Aa7}{𓐓}
+\defhieroglyph{US1Aa7AEXTU}{𓐔}
+\defhieroglyph{Aa7B}{𓐕}
+\defhieroglyph{Aa8}{𓐖}
+\defhieroglyph{Aa9}{𓐗}
+\defhieroglyph{Aa10}{𓐘}
+\defhieroglyph{Aa11}{𓐙}
+\defhieroglyph{Aa12}{𓐚}
+\defhieroglyph{Aa13}{𓐛}
+\defhieroglyph{Aa14}{𓐜}
+\defhieroglyph{Aa15}{𓐝}
+\defhieroglyph{Aa16}{𓐞}
+\defhieroglyph{Aa17}{𓐟}
+\defhieroglyph{Aa18}{𓐠}
+\defhieroglyph{Aa19}{𓐡}
+\defhieroglyph{Aa20}{𓐢}
+\defhieroglyph{Aa21}{𓐣}
+\defhieroglyph{Aa22}{𓐤}
+\defhieroglyph{Aa23}{𓐥}
+\defhieroglyph{Aa24}{𓐦}
+\defhieroglyph{Aa25}{𓐧}
+\defhieroglyph{Aa26}{𓐨}
+\defhieroglyph{Aa27}{𓐩}
+\defhieroglyph{Aa28}{𓐪}
+\defhieroglyph{Aa29}{𓐫}
+\defhieroglyph{Aa30}{𓐬}
+\defhieroglyph{Aa31}{𓐭}
+\defhieroglyph{Aa32}{𓐮}
+\defhieroglyph{mSa}{𓀎}
+\defhieroglyph{xr}{𓀒}
+\defhieroglyph{Xrd}{𓀔}
+\defhieroglyph{sr}{𓀙}
+\defhieroglyph{mniw}{𓀦}
+\defhieroglyph{qiz}{𓀫}
+\defhieroglyph{iry}{𓀸}
+\defhieroglyph{Sps}{𓀻}
+\defhieroglyph{Spsi}{𓀼}
+\defhieroglyph{x}{𓐍}
+\defhieroglyph{Hp}{𓐑}
+\defhieroglyph{qn}{𓐖}
+\defhieroglyph{mAa}{𓐙}
+\defhieroglyph{M}{𓐝}
+\defhieroglyph{im}{𓐛}
+\defhieroglyph{gs}{𓐛}
+\defhieroglyph{sA}{𓐟}
+\defhieroglyph{apr}{𓐢}
+\defhieroglyph{wDa}{𓐣}
+\defhieroglyph{nD}{𓐩}
+\defhieroglyph{qd}{𓐪}
+\defhieroglyph{Xkr}{𓐬}
+\defhieroglyph{msi}{𓁒}
+\defhieroglyph{DHwty}{𓁟}
+\defhieroglyph{Xnmw}{𓁠}
+\defhieroglyph{inpw}{𓁢}
+\defhieroglyph{stX}{𓁣}
+\defhieroglyph{mnw}{𓁤}
+\defhieroglyph{mAat}{𓁦}
+\defhieroglyph{HH}{𓁨}
+\defhieroglyph{tp}{𓁶}
+\defhieroglyph{Hr}{𓁷}
+\defhieroglyph{Sny}{𓁸}
+\defhieroglyph{ir}{𓁹}
+\defhieroglyph{rmi}{𓁿}
+\defhieroglyph{wDAt}{𓂀}
+\defhieroglyph{fnD}{𓂉}
+\defhieroglyph{r}{𓂋}
+\defhieroglyph{rA}{𓂋}
+\defhieroglyph{spt}{𓂎}
+\defhieroglyph{spty}{𓂏}
+\defhieroglyph{mnD}{𓂑}
+\defhieroglyph{kA}{𓂓}
+\defhieroglyph{aHA}{𓂚}
+\defhieroglyph{a}{𓂝}
+\defhieroglyph{Dsr}{𓂦}
+\defhieroglyph{d}{𓂧}
+\defhieroglyph{Dba}{𓂭}
+\defhieroglyph{mt}{𓂸}
+\defhieroglyph{rd}{𓂾}
+\defhieroglyph{sbq}{𓂾}
+\defhieroglyph{gH}{𓂾}
+\defhieroglyph{gHs}{𓂾}
+\defhieroglyph{b}{𓃀}
+\defhieroglyph{ab}{𓃁}
+\defhieroglyph{wab}{𓃂}
+\defhieroglyph{sAH}{𓃃}
+\defhieroglyph{zzmt}{𓃗}
+\defhieroglyph{zAb}{𓃥}
+\defhieroglyph{mAi}{𓃬}
+\defhieroglyph{rw}{𓃭}
+\defhieroglyph{l}{𓃭}
+\defhieroglyph{Aby}{𓃮}
+\defhieroglyph{wn}{𓃹}
+\defhieroglyph{HAt}{𓄂}
+\defhieroglyph{SsA}{𓄃}
+\defhieroglyph{wsr}{𓄊}
+\defhieroglyph{wp}{𓄋}
+\defhieroglyph{db}{𓄏}
+\defhieroglyph{Hw}{𓄑}
+\defhieroglyph{bH}{𓄑}
+\defhieroglyph{ns}{𓄓}
+\defhieroglyph{idn}{𓄔}
+\defhieroglyph{msDr}{𓄔}
+\defhieroglyph{sDm}{𓄔}
+\defhieroglyph{DrD}{𓄔}
+\defhieroglyph{pH}{𓄖}
+\defhieroglyph{kfA}{𓄖}
+\defhieroglyph{xpS}{𓄗}
+\defhieroglyph{wHm}{𓄙}
+\defhieroglyph{Xn}{𓄚}
+\defhieroglyph{sti}{𓄝}
+\defhieroglyph{Sd}{𓄞}
+\defhieroglyph{ms}{𓄟}
+\defhieroglyph{X}{𓄡}
+\defhieroglyph{sd}{𓄢}
+\defhieroglyph{ib}{𓄣}
+\defhieroglyph{nfr}{𓄤}
+\defhieroglyph{mHy}{𓄧}
+\defhieroglyph{zmA}{𓄥}
+\defhieroglyph{imAx}{𓄪}
+\defhieroglyph{Aw}{𓄫}
+\defhieroglyph{spr}{𓄭}
+\defhieroglyph{iwa}{𓄯}
+\defhieroglyph{isw}{𓄯}
+\defhieroglyph{pXr}{𓄲}
+\defhieroglyph{qAb}{𓄲}
+\defhieroglyph{A}{𓄿}
+\defhieroglyph{AA}{𓅀}
+\defhieroglyph{tyw}{𓅂}
+\defhieroglyph{mwt}{𓅐}
+\defhieroglyph{nbty}{𓅒}
+\defhieroglyph{m}{𓅓}
+\defhieroglyph{mm}{𓅔}
+\defhieroglyph{nH}{𓅘}
+\defhieroglyph{Db}{𓅙}
+\defhieroglyph{rxyt}{𓅚}
+\defhieroglyph{Ax}{𓅜}
+\defhieroglyph{dSr}{𓅟}
+\defhieroglyph{gm}{𓅠}
+\defhieroglyph{bA}{𓅡}
+\defhieroglyph{baHi}{𓅤}
+\defhieroglyph{aq}{𓅧}
+\defhieroglyph{wr}{𓅨}
+\defhieroglyph{gb}{𓅬}
+\defhieroglyph{zA}{𓅭}
+\defhieroglyph{pA}{𓅮}
+\defhieroglyph{xn}{𓅯}
+\defhieroglyph{wSA}{𓅰}
+\defhieroglyph{w}{𓅱}
+\defhieroglyph{ww}{𓅳}
+\defhieroglyph{mAw}{𓅶}
+\defhieroglyph{TA}{𓅷}
+\defhieroglyph{snD}{𓅾}
+\defhieroglyph{wSm}{𓆀}
+\defhieroglyph{pAq}{𓆁}
+\defhieroglyph{Sw}{𓆄}
+\defhieroglyph{aSA}{𓆈}
+\defhieroglyph{Styw}{𓆉}
+\defhieroglyph{mzH}{𓆊}
+\defhieroglyph{sbk}{𓆋}
+\defhieroglyph{sAq}{𓆌}
+\defhieroglyph{km}{𓆎}
+\defhieroglyph{Hfn}{𓆐}
+\defhieroglyph{f}{𓆑}
+\defhieroglyph{D}{𓆓}
+\defhieroglyph{DD}{𓆕}
+\defhieroglyph{in}{𓆛}
+\defhieroglyph{ad}{𓆝}
+\defhieroglyph{XA}{𓆞}
+\defhieroglyph{bz}{𓆟}
+\defhieroglyph{nSmt}{𓆠}
+\defhieroglyph{xpr}{𓆣}
+\defhieroglyph{bit}{𓆤}
+\defhieroglyph{srqt}{𓆫}
+\defhieroglyph{iAm}{𓆭}
+\defhieroglyph{Hn}{𓆰}
+\defhieroglyph{xt}{𓆱}
+\defhieroglyph{rnp}{𓆳}
+\defhieroglyph{tr}{𓆵}
+\defhieroglyph{SA}{𓆷}
+\defhieroglyph{zSn}{𓆸}
+\defhieroglyph{wdn}{𓆻}
+\defhieroglyph{xA}{𓆼}
+\defhieroglyph{wAD}{𓇅}
+\defhieroglyph{HA}{𓇉}
+\defhieroglyph{i}{𓇋}
+\defhieroglyph{ii}{𓇍}
+\defhieroglyph{sxt}{𓇏}
+\defhieroglyph{sm}{𓇐}
+\defhieroglyph{sw}{𓇓}
+\defhieroglyph{rsw}{𓇔}
+\defhieroglyph{Sma}{𓇗}
+\defhieroglyph{nDm}{𓇛}
+\defhieroglyph{bnr}{𓇜}
+\defhieroglyph{bdt}{𓇣}
+\defhieroglyph{Dr}{𓇥}
+\defhieroglyph{iz}{𓇩}
+\defhieroglyph{pt}{𓇯}
+\defhieroglyph{iAdt}{𓇲}
+\defhieroglyph{idt}{𓇲}
+\defhieroglyph{ra}{𓇳}
+\defhieroglyph{zw}{𓇳}
+\defhieroglyph{hrw}{𓇳}
+\defhieroglyph{Hnmmt}{𓇶}
+\defhieroglyph{pzD}{𓇷}
+\defhieroglyph{Abd}{𓇹}
+\defhieroglyph{iaH}{𓇹}
+\defhieroglyph{dwA}{𓇼}
+\defhieroglyph{sbA}{𓇼}
+\defhieroglyph{dwAt}{𓇽}
+\defhieroglyph{tA}{𓇾}
+\defhieroglyph{iw}{𓈀}
+\defhieroglyph{wDb}{𓈄}
+\defhieroglyph{spAt}{𓈈}
+\defhieroglyph{xAst}{𓈉}
+\defhieroglyph{Dw}{𓈋}
+\defhieroglyph{Axt}{𓈌}
+\defhieroglyph{xa}{𓈍}
+\defhieroglyph{q}{𓈎}
+\defhieroglyph{iAt}{𓈏}
+\defhieroglyph{n}{𓈖}
+\defhieroglyph{mw}{𓈗}
+\defhieroglyph{S}{𓈙}
+\defhieroglyph{Sm}{𓈝}
+\defhieroglyph{id}{𓈟}
+\defhieroglyph{pr}{𓉐}
+\defhieroglyph{h}{𓉔}
+\defhieroglyph{Hwt}{𓉗}
+\defhieroglyph{aH}{𓉥}
+\defhieroglyph{wsxt}{𓉩}
+\defhieroglyph{kAr}{𓉬}
+\defhieroglyph{zH}{𓉲}
+\defhieroglyph{txn}{𓉶}
+\defhieroglyph{iwn}{𓉺}
+\defhieroglyph{aA}{𓉻}
+\defhieroglyph{zxnt}{𓉽}
+\defhieroglyph{z}{𓊃}
+\defhieroglyph{zb}{𓊄}
+\defhieroglyph{inb}{𓊅}
+\defhieroglyph{Szp}{𓊏}
+\defhieroglyph{ipt}{𓊒}
+\defhieroglyph{nxn}{𓊔}
+\defhieroglyph{niwt}{𓊖}
+\defhieroglyph{zp}{𓊗}
+\defhieroglyph{Snwt}{𓊚}
+\defhieroglyph{aAv}{𓉼}
+\defhieroglyph{wHa}{𓊠}
+\defhieroglyph{TAw}{𓊡}
+\defhieroglyph{nfw}{𓊡}
+\defhieroglyph{aHa}{𓊢}
+\defhieroglyph{xrw}{𓊤}
+\defhieroglyph{st}{𓊨}
+\defhieroglyph{wz}{𓊩}
+\defhieroglyph{p}{𓊪}
+\defhieroglyph{qrsw}{𓊭}
+\defhieroglyph{qrs}{𓊭}
+\defhieroglyph{xAwt}{𓊯}
+\defhieroglyph{xAt}{𓊯}
+\defhieroglyph{Htp}{𓊵}
+\defhieroglyph{kAp}{𓊶}
+\defhieroglyph{kp}{𓊶}
+\defhieroglyph{snTr}{𓊸}
+\defhieroglyph{nTr}{𓊹}
+\defhieroglyph{bd}{𓊺}
+\defhieroglyph{dd}{𓊽}
+\defhieroglyph{Dd}{𓊽}
+\defhieroglyph{imnt}{𓋀}
+\defhieroglyph{iAb}{𓋁}
+\defhieroglyph{wx}{𓋂}
+\defhieroglyph{xm}{𓋉}
+\defhieroglyph{HDt}{𓋑}
+\defhieroglyph{N}{𓋔}
+\defhieroglyph{dSrt}{𓋔}
+\defhieroglyph{sxmty}{𓋗}
+\defhieroglyph{xprS}{𓋙}
+\defhieroglyph{Atf}{𓋚}
+\defhieroglyph{Swty}{𓋛}
+\defhieroglyph{mDH}{𓋜}
+\defhieroglyph{wsx}{𓋝}
+\defhieroglyph{nbw}{𓋞}
+\defhieroglyph{tHn}{𓋣}
+\defhieroglyph{THn}{𓋣}
+\defhieroglyph{mnit}{𓋧}
+\defhieroglyph{sDAw}{𓋨}
+\defhieroglyph{xtm}{𓋩}
+\defhieroglyph{sT}{𓋫}
+\defhieroglyph{dmD}{𓋬}
+\defhieroglyph{Tz}{𓋭}
+\defhieroglyph{Sndyt}{𓋯}
+\defhieroglyph{mnxt}{𓋲}
+\defhieroglyph{s}{𓋴}
+\defhieroglyph{sf}{𓋵}
+\defhieroglyph{siA}{𓋷}
+\defhieroglyph{Tb}{𓋸}
+\defhieroglyph{anx}{𓋹}
+\defhieroglyph{Swt}{𓋺}
+\defhieroglyph{xw}{𓋽}
+\defhieroglyph{HqA}{𓋾}
+\defhieroglyph{awt}{𓋿}
+\defhieroglyph{wAs}{𓌀}
+\defhieroglyph{Dam}{𓌁}
+\defhieroglyph{abA}{𓌂}
+\defhieroglyph{sxm}{𓌂}
+\defhieroglyph{xrp}{𓌂}
+\defhieroglyph{md}{𓌃}
+\defhieroglyph{Ams}{𓌄}
+\defhieroglyph{nxxw}{𓌅}
+\defhieroglyph{HD}{𓌉}
+\defhieroglyph{HDD}{𓌍}
+\defhieroglyph{pd}{𓌒}
+\defhieroglyph{pD}{𓌔}
+\defhieroglyph{zin}{𓌕}
+\defhieroglyph{zwn}{𓌕}
+\defhieroglyph{sXr}{𓌕}
+\defhieroglyph{Ai}{𓌗}
+\defhieroglyph{Ar}{𓌗}
+\defhieroglyph{rwd}{𓌗}
+\defhieroglyph{rwD}{𓌗}
+\defhieroglyph{rs}{𓌘}
+\defhieroglyph{qmA}{𓌙}
+\defhieroglyph{wrrt}{𓌝}
+\defhieroglyph{Sms}{𓌞}
+\defhieroglyph{qs}{𓌟}
+\defhieroglyph{wa}{𓌡}
+\defhieroglyph{sn}{𓌢}
+\defhieroglyph{iH}{𓌤}
+\defhieroglyph{DbA}{𓌥}
+\defhieroglyph{Xr}{𓌨}
+\defhieroglyph{nmt}{𓌩}
+\defhieroglyph{sSm}{𓌫}
+\defhieroglyph{nm}{𓌰}
+\defhieroglyph{mA}{𓌳}
+\defhieroglyph{mr}{𓌸}
+\defhieroglyph{it}{𓌾}
+\defhieroglyph{HqAt}{𓌿}
+\defhieroglyph{hb}{𓍁}
+\defhieroglyph{Sna}{𓍁}
+\defhieroglyph{tm}{𓍃}
+\defhieroglyph{biA}{𓍄}
+\defhieroglyph{grg}{𓍅}
+\defhieroglyph{stp}{𓍉}
+\defhieroglyph{mnx}{𓍊}
+\defhieroglyph{Ab}{𓍋}
+\defhieroglyph{Hmt}{𓍍}
+\defhieroglyph{wbA}{𓍏}
+\defhieroglyph{DA}{𓍑}
+\defhieroglyph{rtH}{𓍕}
+\defhieroglyph{zmn}{𓍖}
+\defhieroglyph{ti}{𓍘}
+\defhieroglyph{xsf}{𓍙}
+\defhieroglyph{Hm}{𓍛}
+\defhieroglyph{mxAt}{𓍝}
+\defhieroglyph{St}{𓍢}
+\defhieroglyph{Snt}{𓍢}
+\defhieroglyph{100}{𓍢}
+\defhieroglyph{sTA}{𓍬}
+\defhieroglyph{sTAw}{𓍮}
+\defhieroglyph{wA}{𓍯}
+\defhieroglyph{snT}{𓍰}
+\defhieroglyph{Sn}{𓍲}
+\defhieroglyph{arq}{𓍼}
+\defhieroglyph{T}{𓍿}
+\defhieroglyph{iTi}{𓎁}
+\defhieroglyph{mDt}{𓎅}
+\defhieroglyph{XAr}{𓎅}
+\defhieroglyph{TmA}{𓎅}
+\defhieroglyph{10}{𓎆}
+\defhieroglyph{mD}{𓎆}
+\defhieroglyph{mH}{𓎔}
+\defhieroglyph{wD}{𓎗}
+\defhieroglyph{aD}{𓎙}
+\defhieroglyph{H}{𓎛}
+\defhieroglyph{wAH}{𓎝}
+\defhieroglyph{sk}{𓎝}
+\defhieroglyph{nb}{𓎟}
+\defhieroglyph{k}{𓎡}
+\defhieroglyph{msn}{𓎣}
+\defhieroglyph{sSr}{𓎤}
+\defhieroglyph{idr}{𓎩}
+\defhieroglyph{bAs}{𓎰}
+\defhieroglyph{Hb}{𓎱}
+\defhieroglyph{Xnm}{𓎸}
+\defhieroglyph{iab}{𓎺}
+\defhieroglyph{g}{𓎼}
+\defhieroglyph{nst}{𓎼}
+\defhieroglyph{Hz}{𓎿}
+\defhieroglyph{xnt}{𓏃}
+\defhieroglyph{mi}{𓏇}
+\defhieroglyph{Hnqt}{𓏊}
+\defhieroglyph{nw}{𓏌}
+\defhieroglyph{ini}{𓏎}
+\defhieroglyph{t}{𓏏}
+\defhieroglyph{rdi}{𓏙}
+\defhieroglyph{di}{𓏙}
+\defhieroglyph{mDAt}{𓏛}
+\defhieroglyph{zS}{𓏞}
+\defhieroglyph{mnhd}{𓏞}
+\defhieroglyph{mn}{𓏠}
+\defhieroglyph{ibA}{𓏡}
+\defhieroglyph{zSSt}{𓏣}
+\defhieroglyph{1}{𓏺}
+\defhieroglyph{2}{𓏻}
+\defhieroglyph{3}{𓏼}
+\defhieroglyph{4}{𓏽}
+\defhieroglyph{5}{𓐃}
+\defhieroglyph{200}{𓍣}
+\defhieroglyph{300}{𓍤}
+\defhieroglyph{400}{𓍥}
+\defhieroglyph{500}{𓍫}
+\defhieroglyph{y}{𓏭}
+\defhieroglyph{W}{𓏲}
+\defhieroglyph{imi}{𓏶}
+\defhieroglyph{wnm}{𓏶}
+\defhieroglyph{Ff2}{𓍴}
+\defhieroglyph{nr}{𓆂}
+\defhieroglyph{K}{𓌆}
+
+
+%% Signs out of our font...
+\defhieroglyph{Ff100}{\drawblob}
+
+\def\drawblob{%
+  \bgroup
+  \def\myscale{0.3}%
+  \begin{tikzpicture}[xscale=\myscale,yscale=-\myscale]
+    \fill svg "M 7.035,4.322 C 6.025,4.299 5.127,4.744 4.096,4.738 1.563,4.723 -0.7232,7.653 0.1299,10.1 1.271,13.37 4.894,13.81 7.443,15.07 8.976,15.83 11.88,16.67 13,15.63 14.3,14.42 16.93,11.35 15.61,9.931 13.25,7.386 10.46,4.401 7.035,4.322 Z";
+  \end{tikzpicture}%
+  \egroup}
+%% END of glyph-related code
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% The representation of hieroglyphic texts here is based on :
+%%  " Inventaire des signes hieroglyphiques en vue de leur saisie
+%%                             informatique "
+%% Jan Buurman-Nicolas Grimal-Michael Hainsworth-Jochen Hallof-
+%% Dirk Van Der Plas
+%%
+%% Memoires de l'Academie des Inscriptions et Belles Lettres
+%%
+%% (the text is in french, english, and german)
+
+%% Declares a hieroglyphic font
+%%      first arg : the font base name as a TeX command (e.g. GA, GB...)
+%%                  (a `\' will be added automatically)
+%%      second arg : the name of the actual tex font.
+
+
+\ProcessOptions\relax
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% text orientation
+%% Are we in right-to-left text ?
+\newif\if@rightleft
+\@rightleftfalse
+
+%% Top level or embedded cadrat
+\newif\if@external
+\@externaltrue
+
+%% Horizontal or columnar text ?
+\newif\if@horizontal
+\@horizontaltrue
+
+%% shaded text
+\newif\if@shaded
+\@shadedfalse
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%     Command for displaying hieroglyphs
+%%%
+%%% Obsolete command: 
+%%% \Acv{size}part of font/number\relax => gives you a character
+
+
+\newcount\@currentHieroglyphicBody
+\@currentHieroglyphicBody=2 % 0 to 5
+
+% \newcommand{\declareHieroGlyphicFont}[2]{%
+%   \expandafter\newfont\csname #1\endcsname{#2 scaled \magstep 2}
+%   \expandafter\newfont\csname #1i\endcsname{#2 scaled \magstep 1}
+%   \expandafter\newfont\csname #1ii\endcsname{#2}
+%   \expandafter\newfont\csname #1iii\endcsname{#2 scaled 833}
+%   \expandafter\newfont\csname #1iiii\endcsname{#2 scaled 694}
+%   \expandafter\newfont\csname #1iiiii\endcsname{#2 scaled 582}  
+% }
+
+
+%% select a reduction factor for glyphs, depending on the value of
+%% counter \@currentHieroglyphicBody
+%% Reduction factors are indicated as numbers. 1 = full size,
+%% 2 = divided by 1.2, 3 = divided by (1.2)^2, etc...
+\def\selectHieroglyphSize#1{%
+\ifcase#1
+\fontsize{24}{24}%  0
+\or\fontsize{16}{16}%1
+\or\fontsize{12}{12}%2
+\or\fontsize{8.5}{8.5}%3
+\or\fontsize{6}{6}%4
+\or\fontsize{4.25}{4.25}%5
+\else
+\message{Too small a sign!}%
+\fi
+\selectfont
+}
+
+%% Old-fashioned manual scaling.
+%% \sizedGlyph{REDUCTION FACTOR}{CODE} : print a glyph with a specific
+%% reduction factor.
+%% (indicated by a number of "i".
+
+% L2R sign
+% \smallSkipAroundSigns{\csname #2#1\endcsname\char\count0}\smallSkipAroundSigns%
+% RTL sign
+% \smallSkipAroundSigns\reflectbox{{\csname #2#1\endcsname\char\count0}}\smallSkipAroundSigns%
+
+
+\def\sizedGlyph#1#2{%
+  \bgroup
+  \smallSkipAroundSigns
+  \selectHieroglyphSize{#1}%
+  \hieroglyph{#2}%
+  \smallSkipAroundSigns
+  \egroup%
+}
+
+\def\autosizedGlyph#1{%
+  \bgroup
+  \smallSkipAroundSigns
+  \selectHieroglyphSize{\@currentHieroglyphicBody}%
+  \hieroglyph{#1}%
+  \smallSkipAroundSigns
+  \egroup%
+}
+
+\def\smallSkipAroundSigns{\hskip 0.2mm}
+
+
+%%% DELETE THIS
+\def\OBSOLETEAcv#1#2/#3\relax{%
+  \count0=#3%
+  \if@rightleft%
+        %%% The \@ensureLeftToRightEngine is used because pdfelatex (and only it) 
+        %%% disaprove violently of \reflectbox used inside a \beginR ... \endR environment.
+        \smallSkipAroundSigns%
+        \@ensureLeftToRightEngine{%
+          \reflectbox{{\csname #2#1\endcsname\char\count0}}}%
+        \smallSkipAroundSigns%
+  \else% \if@rightleft%
+        \smallSkipAroundSigns{\csname #2#1\endcsname\char\count0}\smallSkipAroundSigns%
+  \fi% \if@rightleft%
+}
+
+%%%% front-end to sign :
+
+\def\OBSOLETEAca #1/#2/{\Acv{\@currentHieroglyphicBody}#1/#2\relax}
+%%% END TO DELETE
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%%                      SIZE SYSTEM
+%% there can be three groups of signs for size : long, high, and others
+%% but this isn't really useful except for column writing. 
+
+%% Define the minimal size we will scale glyphs to. 
+%% Indicated in number of "i" signs.
+\def\minHieroglyphicSize{5} % smaller font size available
+
+\newdimen\Htm % maximum height of a cadrat (we chosed the size
+                    % of the independant pronoun(inek)
+\newdimen\Htmi
+\newdimen\Htmii
+\newdimen\Htmiii
+\newdimen\Htmiiii
+\newdimen\Htmiiiii
+
+
+%%% \InTextHieroglyphs resets the size of hieroglyph
+
+\newcount\@Hauteur              % sign size used
+\@Hauteur=0
+\newcount\@HauteurW              % sign size used
+\@HauteurW=0
+\newcount\@HauteurH              % sign size used
+\@HauteurH=0
+%% for long signs :
+\newcount\@currentHieroglyphicBodyW{}% possible values : 0-5
+%% for high signs :
+\newcount\@currentHieroglyphicBodyH{}% possible values 0-5
+
+
+\newcommand{\InTextHieroglyphs}{%
+  % \newcount\@currentHieroglyphicBody%
+  \@currentHieroglyphicBody=2
+  %% now compute the size of "jnk" :
+  %% if you want smaller cadrat, uncomment the line below,
+  %% to use the size of the aleph vulture as cadrat height.
+  \selectHieroglyphSize{\@currentHieroglyphicBody}
+  \setbox0=\vbox{\hbox{\hieroglyph{A}}}%
+  \Htm=\ht0%
+  %\advance\Htm by 0.025mm         % Htm : max size of wanted cadrat
+  %\advance\Htm by 0.5mm         % Htm : max size of wanted cadrat
+  % 
+  \setbox0=\vbox{\hbox{\sizedGlyph{1}{A}}}%
+  \Htmi=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{2}{A}}}%
+  \Htmii=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{3}{A}}}%
+  \Htmiii=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{4}{A}}}%
+  \Htmiiii=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{5}{A}}}%
+  \Htmiiiii=\ht0%
+}
+
+\newcommand{\DisplayHieroglyphs}{%
+  \@currentHieroglyphicBody=1
+  %% now compute the size of "jnk" :
+  %% if you want smaller cadrat, uncomment the line below,
+  %% to use the size of the aleph vulture as cadrat height.
+  \selectHieroglyphSize{\@currentHieroglyphicBody}
+  \setbox0=\vbox{\hbox{\hieroglyph{A}}}%
+  \Htm=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{1}{A}}}%
+  \Htmi=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{2}{A}}}%
+  \Htmii=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{3}{A}}}%
+  \Htmiii=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{4}{A}}}%
+  \Htmiiii=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{5}{A}}}%
+  \Htmiiiii=\ht0%
+}
+
+\newcommand{\HugeHieroglyphs}{%
+  \@Hauteur=0
+  \@HauteurW=0
+  \@HauteurH=0
+  \@currentHieroglyphicBody=0
+  %% now compute the size of "jnk" :
+  %% if you want smaller cadrat, uncomment the line below,
+  %% to use the size of the aleph vulture as cadrat height.
+  \selectHieroglyphSize{\@currentHieroglyphicBody}
+  \setbox0=\vbox{\hbox{\hieroglyph{A}}}%
+  \Htm=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{1}{A}}}%
+  \Htmi=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{2}{A}}}%
+  \Htmii=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{3}{A}}}%
+  \Htmiii=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{4}{A}}}%
+  \Htmiiii=\ht0%
+  \setbox0=\vbox{\hbox{\sizedGlyph{5}{A}}}%
+  \Htmiiiii=\ht0%
+}
+%%% Set all dimensions :
+\InTextHieroglyphs
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Upper level commands dealing with cadrats and the like.
+%%%
+%%% The \Cadrat command can be redefined to deal with toggles.
+%%% It's currently used for shading
+
+\def\@UpperLevel#1#2{\if@shaded\fullShade{#1{#2}}\else#1{#2}\fi}
+
+\def\loneSign#1{\@UpperLevel\loneSigne@Aux{#1}}
+
+\def\Cadrat#1{\@UpperLevel\Cadrat@Aux{#1}}
+
+\def\loneSymbol#1{\if@external\@UpperLevel{}{{#1}}\else#1\fi}
+
+\def\HfullSpace{\loneSymbol{\HfullSpace@Aux}}
+
+\def\HquarterSpace{\loneSymbol{\HquarterSpace@Aux}}
+
+\def\HsmallSpace{\loneSymbol{\HsmallSpace@Aux}}
+\def\Hrevert#1{{\if@rightleft\@rightleftfalse\else\@rightlefttrue\fi#1}}
+
+%% \@aligner is used in front of all output boxes.
+\def\@aligner{\if@external\raise -\@Lower \fi}
+
+% using tex--xet
+\def\leftright{%
+  \endR{}%
+  \beginL%
+  \@rightleftfalse%
+  \@xettexrightleftfalse%
+}
+
+
+\def\rightleft{%
+  \endL{}%
+  \beginR%
+  \@rightlefttrue\@xettexrightlefttrue%
+}
+
+\def\@ensureLeftToRightEngine#1{\beginL#1\endLi}
+
+\def\boxrightleft#1{{\@rightlefttrue{}#1}}
+
+\def\HfullSpace@Aux{{\phantom{\autosizedGlyph{A1}}}} %% the phantom of
+                                %% a white space
+
+\def\HquarterSpace@Aux{{\phantom{\autosizedGlyph{X1}}}} %% the phantom
+                                %% of the fourth
+                                %% part of a cadrat
+
+\def\HToLine{\par}              % line change after -!
+
+\def\HsmallSpace@Aux{{\phantom{\autosizedGlyph{Z1}}}} %% the size of a ``Z1'' sign.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% For use with sesh
+%% 
+%% Couples of macros (mmx. \CadratLine and \CadratLineI are used thus :
+%%         CadratLineI is used for the top sign 
+%%         CadratLine is used for the others
+%% CadratLine : horizontal inside boxes
+%% HinterSignsSpace  : hspace between signs
+%% HwordSpace : hspace between words (same as HinterSignsSpace, breaks more easily)
+%% Hta : one of (nothing), i, ii, ... : font size used
+%% H@Reduction : tries to get a good width for horizontal arangement
+%% Himbt : resets the value of some macros when INSIDE a cadrat
+%% Hbt : a cadrat 
+%% InternalCadrat : a cadrat, when inside another cadrat
+%% Hunh : a lone hieroglyph, a long way from home
+%% LoneHorizontalLine : signs on the same level. used for signs in column 
+
+
+
+\def\negAROBspace{\hskip -1mm} % negative space
+
+\def\negAROBvspace{\vskip -1mm} % negative vertical space
+
+
+%%% Top line in a cadrat (ex. \HbtI)
+\def\CadratTopLine#1{\hbox{\H@Reduction{#1}}}
+
+%%% Top line in a cadrat (ex. \Hbt)
+%%% normal line in a cadrat
+\def\CadratLine#1{\vskip 0.05\Htm plus 1fil\hbox{\H@Reduction{#1}}} % 
+
+%%% inter-sign space (ex. \Hrp)
+\def\HinterSignsSpace{\nolinebreak[1]\if@shaded\hskip 0.0mm\else\hskip  0 mm plus 0.3mm\fi}
+\def\HinterCadratSpace{\nolinebreak[1]\if@shaded\hskip 0.0mm\else\hskip  0.2 mm plus 0.5mm\fi}
+
+%%% inter-word space (ex. Hitmts)
+\def\HwordSpace{\linebreak[3]\if@shaded\hskip 0.0mm\else\hskip 0.2mm plus 0.5mm\fi}
+
+\def\LoneHorizontalLine#1{#1}
+
+\def\Hsmaller{\@Smaller}
+
+\def\@Smaller{%
+  \ifnum\@currentHieroglyphicBody=\minHieroglyphicSize%
+  % DO NOTHING
+  \else
+  \advance\@currentHieroglyphicBody by 1%
+  \advance\@currentHieroglyphicBodyW by 1%
+  \advance\@currentHieroglyphicBodyH by 1%
+  \advance\@Hauteur by 1%
+  \advance\@HauteurW by 1%
+  \advance\@HauteurH by 1
+  \fi}
+
+\def\Horizontal@Smaller{\@Smaller}
+\def\Vertical@Smaller{\@Smaller}
+
+% Horizontal box.
+\def\H@Reduction#1{%  
+{\ifx\@currentHieroglyphicBody\minHieroglyphicSize%
+  #1\else
+  \setbox0=\hbox{#1}%
+  \ifdim\wd0>1.3\Htm%      Un cadrat, c'est presque carre'
+  \Horizontal@Smaller
+  \H@Reduction{#1}%
+  \else #1\fi\fi}}
+
+\def\Himbt#1{%
+  \def\CadratLine##1{%
+    \vskip 0.05\Htm plus 1fil\hbox to \wd0{%
+      \hfil \H@Reduction{##1}\hfil}}%
+  \def\CadratTopLine##1{\hbox to \wd0{\hfil \H@Reduction{##1}\hfil}}%
+  \setbox0=\vbox to \Htm{\offinterlineskip #1}}
+
+
+%% A box containing hieroglyphs and cadrats (ex. \Hbt)
+\def\Cadrat@Aux#1{{%
+    \def\strut{\relax}%
+    \setbox0=\vbox{\offinterlineskip\@externalfalse
+      #1}%
+    \ifdim\ht0>\Htm%
+    \ifx\@currentHieroglyphicBody\minHieroglyphicSize%
+    \Himbt{\@externalfalse #1}%
+    \@aligner\hbox{\box0}%
+    \else%
+    \Vertical@Smaller
+    \Cadrat@Aux{\@externalfalse #1}%
+    \fi%
+    \else%
+    \Himbt{\@externalfalse #1}%
+    \@aligner\hbox{\box0}\fi}\strut}
+
+%% Une boite, a` l'inte'rieur, n'a pas de hauteur fixe 
+
+% ex. \Hbti
+\def\InternalCadrat#1{{%
+\def\CadratTopLine##1{\hbox{\H@Reduction{##1}}}%
+\def\CadratLine##1{\vskip 0.05\Htm plus 1fil\hbox{\H@Reduction{##1}}}%
+% First, select base cadra height according to Hauteur
+\ifcase \@Hauteur \or
+\Htm\Htmi\or
+\Htm\Htmii\or
+\Htm\Htmiii\or
+\Htm\Htmiiii\or
+\Htm\Htmiiiii\else
+\message{Too small a sign!}%
+\fi
+\InternalCadratAux{#1}}}
+
+\def\InternalCadratAux#1{{%
+%%% Now, try to fit the box :
+    \setbox0=\vbox{\offinterlineskip #1}%
+%%%If the box is too tall, we'll have to reduce it
+    \ifdim\ht0>\Htm
+%%% Except if the sign size is already the smallest one
+    \ifx\@currentHieroglyphicBody\minHieroglyphicSize
+    \Himbt{#1}\hbox{\box0}%
+    \else%
+    \Vertical@Smaller
+    \InternalCadratAux{#1}%
+    \fi%
+    \else%
+    \Himbt{#1}\hbox{\box0}%
+    \fi
+    }}
+
+%hieroglyphes seuls (centre's ou non)
+
+\def\loneSigne@AuxA#1{{%
+\setbox0=\hbox{#1}%
+\ifdim\ht0>0.75\Htm%
+\setbox0=\hbox{{\box0}}%
+\else
+\setbox0=\hbox{{\vbox to \Htm{\vfil\box0\vfil}}}%
+\fi
+\@aligner\box0\strut}}
+
+\def\loneSigne@AuxB#1{\@aligner\hbox{{#1}}\strut}
+
+\def\Centrer{\def\loneSigne@Aux{\loneSigne@AuxA}}
+\def\SurLigne{\def\loneSigne@Aux{\loneSigne@AuxB}}
+\Centrer
+%% Overlap, centering signs
+
+%% Utility functions for overlapping :
+
+%% Overlapping preparation for #1 and #2. put them in boxes 0 and 2
+
+%% 
+\def\HorizontalOverlapAux#1#2{%
+  \setbox0=\hbox{#1}%
+  \setbox2=\hbox{#2}%
+  \setbox0=\hbox{\raise\dp0\box0}% there MUST be another way !!!!!!
+  \setbox2=\hbox{\raise\dp2\box2}%
+  }
+
+\def\hsuperpose#1#2{%
+  \HorizontalOverlapAux{#1}{#2}%
+  \ifdim\ht0>\ht2%
+  \setbox2=\hbox to \wd2{\vbox to \ht0{\offinterlineskip\vss\box2\vss}}%
+  \else
+  \setbox0=\hbox to \wd0{\vbox to \ht2{\offinterlineskip\vss\box0\vss}}%
+  \fi
+  \ifdim\wd0>\wd2%
+  \@aligner\hbox{\rlap{\hbox to\wd0{\hss\box2\hss}}\box0}%
+  \else
+  \@aligner\hbox{\rlap{\hbox to\wd2{\hss\box0\hss}}\box2}%
+  \fi}
+
+%% Overlap, with only horizontal centering
+\def\@plainOverlap#1#2{%
+  \HorizontalOverlapAux{#1}{#2}%
+  \ifdim\wd0>\wd2%
+  \hbox{\rlap{\hbox to\wd0{\hss\box2\hss}}{\box0}}%
+  \else
+  \hbox{\rlap{\hbox to\wd2{\hss\box0\hss}}\box2}%
+  \fi
+  }
+
+
+\def\Hrotate#1#2{%
+  \mbox{\smallSkipAroundSigns{{\def\smallSkipAroundSigns{}%
+        \raisebox{\depth}{\rotatebox[origin=rB]{#1}{#2}}%
+        %%\fbox{\raisebox{\depth}{\rotatebox[origin=c]{#1}{#2}}}%
+    }}}}
+
+\def\HRXC#1{\HrotateXC{#1}}
+\def\HRXC{\HrotateXC}
+
+\def\HrotateXC#1{
+% turns a box around its middle ??? 
+% NEEDS PS OUTPUT FACILITY !!!!!
+\setbox0=\hbox{#1}%
+\hbox to 0.5\wd0{\hss\vbox to 0.5\ht0{\vss}\vrule\hss}%
+\special{ps:gsave currentpoint currentpoint translate 
+90 rotate neg exch neg exch translate
+}%
+\hbox to 0em{\hss\vbox to 0ex{\vss\box0\vss}\hss}%
+\special{ ps:currentpoint grestore moveto}%
+}
+
+
+\newif\if@displayhieroglyphes
+\@displayhieroglyphestrue
+
+%\def\DisplayHieroglyphs{\@displayhieroglyphestrue}
+\def\TextHieroglyphs{\@displayhieroglyphesfalse}
+\def\ch@seHsize{}
+\def\ch@seHsizei{\Htm=\Htmi\Htmi=\Htmii\Htmii=\Htmiii\Htmiii=\Htmiiii\Htmiiii=\Htmiiiii}
+\def\ch@seHsizeii{\Htm=\Htmii\Htmii=\Htmiii\Htmiii=\Htmiiii\Htmiiii=\Htmiiiii}
+\def\ch@seHsizeiii{\Htm=\Htmiii\Htmii=\Htmiiii\Htmiiii=\Htmiiiii}
+\def\ch@seHsizeiiii{\Htm=\Htmiiii\Htmiiii=\Htmiiiii}
+\def\ch@seHsizeiiiii{\Htm=\Htmiiiii}
+\def\SmallerText{\Hsmaller\edef\tmp{\csname ch@seHsize\@currentHieroglyphicBody\endcsname}\tmp}
+
+% \def\hieroglyph{%
+% \ifvmode\leavevmode\fi%
+% \bgroup
+% \if@displayhieroglyphes%
+% \setbox\strutbox=\hbox{\vrule height 1\Htm depth 0.5\Htm
+%   width\z@}\bgroup%
+% \else%
+% \EnPetit\bgroup%
+% \setbox\strutbox=\hbox{\vrule height 1\Htm depth 0.5\Htm
+%   width\z@}
+% \fi%
+% }
+% \def\endhieroglyph{\egroup\egroup}
+
+\def\EnPetit#1{\bgroup
+  %%\let\strut=\relax
+  \@Smaller\relax\Htm\Htmi\relax #1\egroup}
+ 
+\def\traittexte#1{$\stackrel{\mbox{\rmfamily\tiny #1}}%
+{\vrule width 0.05pt height 1mm}$}
+
+\def\enrouge#1{{\setbox0=\hbox{#1}%
+\dimen\@fillerHeight=\ht0%
+\advance\dimen\@fillerHeight by 7pt%
+\raise -7pt\hbox{\vbox to \dimen\@fillerHeight{\offinterlineskip\box0\vfil\hrule}}}}
+
+% a plain@box has height 0, and no depth (depth 0 is achieved through
+% the vskip 0em !
+\def\plain@box#1{\hbox{\vbox to 0ex{\vss\hbox{#1}\vskip0ex}}}
+%\def\@flat@box#1{\hbox{#1}}
+
+\def\parconstruct#1#2#3{%
+  \bgroup%
+  \setbox0=\hbox{\@externalfalse #3}%
+  \dimen0=\ht0%
+  \setbox0=\hbox{#3}%
+  \loneSymbol{\@aligner\plain@box{$\scriptscriptstyle\left#1\vcenter{\hbox{\vbox to \dimen0{}}}\right.$}}%
+  \unhbox0%
+  \loneSymbol{\@aligner\plain@box{$\scriptscriptstyle\left.\vcenter{\hbox{\vbox to \dimen0{}}}\right#2$}}%
+  \egroup}
+
+\def\xxxparconstruct#1#2#3{%
+  \bgroup%
+  \setbox0=\hbox{\@externalfalse #3}%
+  \dimen0=\ht0%
+  \setbox0=\hbox{#3}%
+  \loneSymbol{\@aligner\plain@box{\hbox{\vrule width 0.5mm height\dimen0}}}%
+  \unhbox0%
+  \loneSymbol{\@aligner\plain@box{\hbox{\vrule width 0.5mm height\dimen0}}}%
+  \egroup}
+
+
+\def\edisuperfet#1{\parconstruct{\{}{\}}{#1}}
+\def\ediefface#1{\parconstruct{[}{]}{#1}}
+\def\edidisparu#1{\parconstruct{\{}{\}}{#1}}
+\def\ediajoutscribe#1{\parconstruct{\{}{\}}{#1}}
+\def\ediajoutauteur#1{\parconstruct{\langle}{\rangle}{#1}}
+
+\def\EnGros{\@displayhieroglyphestrue}
+
+\newdimen\largeur@colonne
+\def\H@I@Reduction#1{%  
+{\ifx\@currentHieroglyphicBody\minHieroglyphicSize%
+#1\else
+\setbox0=\hbox{#1}%
+\ifdim\wd0>\largeur@colonne% 
+\Horizontal@Smaller
+\H@I@Reduction{#1}%
+\else #1\fi\fi}}
+
+\def\HRemplir#1#2{{%
+    \dimen0=#1\relax
+    \dimen2=#2\relax
+    \count4=\dimen0%
+    \setbox0=\hbox{\EgypS C}%
+    \count2=\wd0%
+                                %\ifdim\dimen0<\wd0\relax\dimen0=\wd0\relax\fi
+    \ifdim\dimen2<\ht0\relax\dimen2=\ht0\relax\fi
+    \divide\count4 by \count2%
+    \advance\count4 by 1%
+    \dimen0=\wd0%
+    \multiply\dimen0 by \count4%
+    \hbox{\vbox to \dimen2{\leaders\hbox to \dimen0{%
+          \leaders\box0\hfill}\vfill}}}}
+
+\def\pointrouge{\vbox to\Htm{\hbox{\EgypS o}\vfill}}
+\def\pointnoir{\vbox to\Htm{\hbox{\EgypS O}\vfill}}
+
+\def\pointrouge{\mbox{\EgypS o}}
+\def\pointnoir{\mbox{\EgypS O}}
+
+\def\NoRulesBetweenColumns{\def\ColumnSepar{\relax}}
+\def\RulesBetweenColumns{\def\ColumnSepar{\vrule}}
+\NoRulesBetweenColumns
+
+%% End of pages :
+\def\HendOfPage{\HendOfLine }
+
+%% End of lines :
+
+\def\HendOfLine{\hskip 0em plus 1fil\break}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Remains of cartouche related code (to be modified a lot)
+
+\newdimen\@Lower
+\@Lower=0.5mm                   % cartouche line + space
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Simplified quadrants creation commands.
+
+% Rationale : letters indicate the number of glyph in each layer of
+% the quadrant. This is replicated in the representation itself.
+% A=1, B=2...
+
+\def\hieroglyphicParagraph#1{\bgroup
+\def\@separator{}%
+  \leavevmode
+#1\relax
+\egroup}
+
+\def\@showQuadrant#1{%
+  \@separator#1\def\@separator{\HinterCadratSpace}\ignorespaces%
+}
+
+\def\cadratA-#1-{\@showQuadrant{\loneSign{\autosizedGlyph{#1}}}}
+\def\cadratAA-#1:#2-{\@showQuadrant{\Cadrat{\CadratTopLine{\autosizedGlyph{#1}}\CadratLine{\autosizedGlyph{#2}}}}}
+\def\cadratAAA-#1:#2:#3-{\@showQuadrant{
+    \Cadrat{\CadratTopLine{\autosizedGlyph{#1}}%
+      \CadratLine{\autosizedGlyph{#2}}
+      \CadratLine{\autosizedGlyph{#3}}
+    }}}
+
+\def\cadratAAAB-#1:#2:#3:#4*#5-{\@showQuadrant{
+    \Cadrat{\CadratTopLine{\autosizedGlyph{#1}}%
+      \CadratLine{\autosizedGlyph{#2}}
+      \CadratLine{\autosizedGlyph{#3}}
+      \CadratLine{\autosizedGlyph{#4}\hfill\autosizedGlyph{#5}}
+    }}}
+
+\def\cadratBA-#1*#2:#3-{\@showQuadrant{\Cadrat{\CadratTopLine{\autosizedGlyph{#1}\hfill\autosizedGlyph{#2}}\CadratLine{\autosizedGlyph{#3}}}}}
+
+\def\cadratBAA-#1*#2:#3:#4-{\@showQuadrant{%
+    \Cadrat{%
+      \CadratTopLine{\autosizedGlyph{#1}\hfill\autosizedGlyph{#2}}
+      \CadratLine{\autosizedGlyph{#3}}
+      \CadratLine{\autosizedGlyph{#4}}
+    }}}
+
+\def\cadratAB-#1:#2*#3-{\@showQuadrant{%
+    \Cadrat{%
+      \CadratTopLine{\autosizedGlyph{#1}}
+      \CadratLine{\autosizedGlyph{#2}\hfill\autosizedGlyph{#3}}%
+    }}}
+
+\def\cadratAC-#1:#2*#3*#4-{\@showQuadrant{%
+    \Cadrat{%
+      \CadratTopLine{\autosizedGlyph{#1}}%
+      \CadratLine{\autosizedGlyph{#2}\hfill\autosizedGlyph{#3}\hfill\autosizedGlyph{#4}}%
+    }}}
+
+\def\cadratABA-#1:#2*#3:#4-{\@showQuadrant{%
+    \Cadrat{%
+      \CadratTopLine{\autosizedGlyph{#1}}%
+      \CadratLine{\autosizedGlyph{#2}\hfill\autosizedGlyph{#3}}%
+      \CadratLine{\autosizedGlyph{#4}}%
+    }}}
+
+\def\cadratABAA-#1:#2*#3:#4:#5-{\@showQuadrant{%
+    \Cadrat{%
+      \CadratTopLine{\autosizedGlyph{#1}}%
+      \CadratLine{\autosizedGlyph{#2}\hfill\autosizedGlyph{#3}}%
+      \CadratLine{\autosizedGlyph{#4}}%
+      \CadratLine{\autosizedGlyph{#5}}%
+    }}}
+
+\def\ligDd{%
+\@showQuadrant{\loneSign{\bgroup\hbox{\vbox{\offinterlineskip\hbox{\autosizedGlyph{D}}\vskip
+      -1mm\hbox{\@Smaller\@Smaller\autosizedGlyph{d}}}}\egroup}%
+}}
+
+\def\ligDt{{\hbox{\vbox{\offinterlineskip%
+\hbox{\Acv{\Hta}GI/42\relax}%
+\vskip -1mm\hbox{\Acv{\Hta}GX/32\relax}%
+}}}}
+
+\def\ligDra{\hbox{\vbox{\offinterlineskip%
+\hbox{\Acv{\Hta}GI/42\relax}%
+\vskip -1.6mm\hbox{\hskip1mm\Acv{\Hta}GN/36\relax}%
+}}}
+
+\def\bCartouche{\cadratA-US1V11AEXTU-}
+\def\eCartouche{\cadratA-US1V11BEXTU-}
+% Local Variables:
+% TeX-engine: xetex
+% End:

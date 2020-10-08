@@ -1,0 +1,63 @@
+ \documentclass[12pt]{article}
+\usepackage{hiero2}
+
+\usepackage{fontspec}
+
+%%\setmainfont[Ligatures=TeX,UprightFeatures={SmallCapsFont=Charis SIL Small Caps}]{Charis SIL}
+
+%% \usepackage{color}
+%% \usepackage{ifthen}
+%% \usepackage{graphicx}
+
+
+%% \usepackage{xltxtra}
+%%\usepackage{wrapfig}
+%% \usepackage{natbib}
+
+%%%\usepackage{listings}
+%% \usepackage{tikz} 
+%% \usetikzlibrary{datavisualization}
+%% \usetikzlibrary{positioning}
+%% \usetikzlibrary{decorations.pathreplacing}
+
+\newcommand{\hiero}[1]{\hieroglyphicParagraph{#1}}
+\newcommand{\simplehiero}[1]{\hiero{\cadratA-#1-}}
+
+\begin{document}
+
+Very simple example :
+
+\hiero{%
+\cadratBA-p*t:pt-
+}
+
+More complex example :
+
+\hiero{%
+  \cadratAA-N1:Ff100-\HwordSpace \cadratA-A47-\cadratA-G1-\cadratAA-Z7:Y1-\cadratA-A24-\cadratAA-A1:Z2-\HwordSpace
+  \cadratA-Y3-\cadratBA-Z7*Ff100:Z2-\HwordSpace   \cadratA-M17-\cadratAA-mn:n-\cadratAC-Htp:t*p*W-\cadratAA-Y1:A1-\HwordSpace
+  \cadratA-n-\HwordSpace
+  \cadratA-V49A-\cadratAB-N35:W24*Z7-\cadratA-O51-\cadratAA-X1:O1-
+  \cadratA-Z3A-\cadratAB-O29:O1*O1-\cadratA-G7-\cadratA-S34-\cadratA-U28-\cadratA-S29-\cadratA-n-\HwordSpace
+  \cadratA-Y3-\HwordSpace
+  \cadratAA-p:n-\cadratAA-t:A-\cadratAA-wr:r-\cadratA-A1-\HwordSpace
+  \cadratA-N35-\cadratAA-X1:G1-\cadratA-O6-\cadratAA-X1:O1-
+  \bCartouche\cadratA-sw-\cadratA-bit-\cadratA-ra-\cadratA-wsr-\cadratA-Sw-\cadratAA-stp:n-\cadratA-G7-\eCartouche\cadratA-S34-
+  \cadratA-U28-\cadratA-S29-\cadratA-G17-\cadratA-O1-\cadratA-Z1-\cadratA-M17-\cadratAA-Y5:N35-
+  \cadratA-G7-\cadratA-G17-\cadratA-S34-\cadratA-U28-\cadratA-S29-\cadratA-G17-\cadratA-V28-
+  \cadratA-W14-\cadratA-S29-\cadratA-A2-\HwordSpace
+  \cadratA-i-\cadratAA-mn:n-\cadratA-G7-\HwordSpace
+  \cadratA-N5-\cadratA-G7-\HwordSpace
+  \cadratA-M23-\cadratAA-X1:N35-\cadratA-G7-\HwordSpace
+  \cadratA-R8-\cadratA-R8-\cadratA-R8-\cadratA-G7-\cadratA-Z3A-
+}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% coding: utf-8
+%%% TeX-PDF-mode: t
+%%% TeX-master: t
+%%% TeX-engine: xetex
+%%% End:
